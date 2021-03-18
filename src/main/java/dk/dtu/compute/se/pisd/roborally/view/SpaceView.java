@@ -25,6 +25,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.Wall;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
@@ -91,6 +92,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
+
         }
     }
 
@@ -98,20 +100,66 @@ public class SpaceView extends StackPane implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             updatePlayer();
-
+            updateWall();
         }
     }
 
-    public void canvasLine() {
+    public void updateWall() {
+        Wall wall = space.getWall();
+        if (wall != null) {
+            if (wall.heading == Heading.NORTH) {
+                wallNorth();
+            }
+            if (wall.heading == Heading.EAST) {
+                wallEast();
+            }
+            if (wall.heading == Heading.WEST) {
+                wallWest();
+            }
+            if (wall.heading == Heading.SOUTH) {
+                wallSouth();
+            }
+        }
+    }
+    public void wallSouth() {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.RED);
         gc.setLineWidth(5);
         gc.setLineCap(StrokeLineCap.ROUND);
-        
+
         gc.strokeLine(2,SPACE_HEIGHT-2,SPACE_WIDTH-2,SPACE_HEIGHT-2);
         this.getChildren().add(canvas);
     }
 
+    public void wallWest() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
 
+        gc.strokeLine(2, SPACE_HEIGHT-72, 2 , SPACE_HEIGHT-2 );
+        this.getChildren().add(canvas);
+    }
+    public void wallNorth() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
+
+        gc.strokeLine(2, SPACE_HEIGHT-73, SPACE_WIDTH-2 , SPACE_HEIGHT-73 );
+        this.getChildren().add(canvas);
+    }
+    public void wallEast() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(5);
+        gc.setLineCap(StrokeLineCap.ROUND);
+
+        gc.strokeLine(SPACE_WIDTH-2, SPACE_HEIGHT-2, SPACE_WIDTH-2 , SPACE_HEIGHT-73 );
+        this.getChildren().add(canvas);
+    }
 }
