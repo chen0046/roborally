@@ -48,7 +48,6 @@ public class GameController {
      * @param space the space to which the current player should move
      */
     public void movePlayerToSpace(@NotNull Space space, @NotNull Player player, @NotNull Heading heading) throws ImpossibleMoveException {
-
         Player other = space.getPlayer();
         if (other != null) {
             Space target = board.getNeighbour(space, heading);
