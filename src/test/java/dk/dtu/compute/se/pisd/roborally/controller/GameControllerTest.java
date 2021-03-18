@@ -1,5 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.exceptions.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -40,7 +41,11 @@ class GameControllerTest {
         Player player1 = board.getPlayer(0);
         Player player2 = board.getPlayer(1);
 
-        gameController.moveCurrentPlayerToSpace(board.getSpace(0, 4));
+        try {
+            gameController.movePlayerToSpace(board.getSpace(0, 4), player1, player1.getHeading());
+        } catch (ImpossibleMoveException e) {
+            e.printStackTrace();
+        }
 
         Assertions.assertEquals(player1, board.getSpace(0, 4).getPlayer(), "Player " + player1.getName() + " should beSpace (0,4)!");
         Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");

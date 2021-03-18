@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.exceptions.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Phase;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -109,7 +110,11 @@ public class BoardView extends VBox implements ViewObserver {
                 Board board = space.board;
 
                 if (board == gameController.board) {
-                    gameController.moveCurrentPlayerToSpace(space);
+                    try {
+                        gameController.movePlayerToSpace(space, board.getCurrentPlayer(), board.getCurrentPlayer().getHeading());
+                    } catch (ImpossibleMoveException e) {
+                        e.printStackTrace();
+                    }
                     event.consume();
                 }
             }
