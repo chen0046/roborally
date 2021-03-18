@@ -37,12 +37,14 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
+    private Wall wall;
 
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
         this.y = y;
         player = null;
+        wall = null;
     }
 
     public Player getPlayer() {
@@ -65,6 +67,7 @@ public class Space extends Subject {
         }
     }
 
+
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
@@ -72,4 +75,12 @@ public class Space extends Subject {
         notifyChange();
     }
 
+    public Wall getWall() {
+        return wall;
+    }
+
+    public void setWall(Heading heading) {
+        this.wall = new Wall(heading);
+
+    }
 }
