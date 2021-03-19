@@ -40,6 +40,7 @@ public class Space extends Subject {
 
     private Player player;
     private Wall wall;
+    private Checkpoint checkpoint;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -47,6 +48,7 @@ public class Space extends Subject {
         this.y = y;
         player = null;
         wall = null;
+        checkpoint = null;
     }
 
     public Player getPlayer() {
@@ -83,6 +85,13 @@ public class Space extends Subject {
 
     public void setWall(Heading heading) {
         this.wall = new Wall(heading);
+    }
 
+    public Checkpoint getCheckpoint() {
+        return checkpoint;
+    }
+
+    public void setCheckpoint(int priority) {
+        this.checkpoint = new Checkpoint(priority);
     }
 }
