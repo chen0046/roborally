@@ -209,6 +209,12 @@ public class GameController {
                 case FASTER_FORWARD:
                     this.fasterForward(player);
                     break;
+                case MOVE_BACK:
+                    this.moveBack(player);
+                    break;
+                case U_TURN:
+                    this.uTurn(player);
+                    break;
                 default:
                     // DO NOTHING (for now)
             }
@@ -287,7 +293,18 @@ public class GameController {
             }
         }
     }
-
+    public void moveBack(@NotNull Player player) {
+        Heading heading = player.getHeading().next().next();
+        Space space = player.getSpace();
+        Space target = board.getNeighbour(space, heading);
+        if (target != null) {
+            try {
+                movePlayerToSpace(target, player, heading);
+            } catch (ImpossibleMoveException e) {
+                // We do nothing here for now
+            }
+        }
+    }
     // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Space current = player.getSpace();
@@ -301,6 +318,12 @@ public class GameController {
         Space current = player.getSpace();
         if (current != null && player.board == current.board) {
             player.setHeading(player.getHeading().prev());
+        }
+    }
+    public void uTurn(@NotNull Player player) {
+        Space current = player.getSpace();
+        if (current != null && player.board == current.board) {
+            player.setHeading(player.getHeading().next().next());
         }
     }
 
