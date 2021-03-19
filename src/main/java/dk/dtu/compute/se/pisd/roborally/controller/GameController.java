@@ -49,19 +49,23 @@ public class GameController {
      */
     public void movePlayerToSpace(@NotNull Space space, @NotNull Player player, @NotNull Heading heading) throws ImpossibleMoveException {
         Player other = space.getPlayer();
-        if (other != null) {
-            Space target = board.getNeighbour(space, heading);
-            if (target != null) {
-                movePlayerToSpace(target, other, heading);
-            } else {
-                throw new ImpossibleMoveException(player, space, heading);
+        if (wallCheck(space, player, heading)) {
+            if (other != null) {
+                Space target = board.getNeighbour(space, heading);
+                if (target != null) {
+                    movePlayerToSpace(target, other, heading);
+                } else {
+                    throw new ImpossibleMoveException(player, space, heading);
+                }
             }
+            player.setSpace(space);
+            int playerNumber = board.getPlayerNumber(player);
+            Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
+            board.setCurrentPlayer(nextPlayer);
+            board.setCount(board.getCount() + 1);
+        } else {
+            throw new ImpossibleMoveException(player, space, heading);
         }
-        player.setSpace(space);
-        int playerNumber = board.getPlayerNumber(player);
-        Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
-        board.setCurrentPlayer(nextPlayer);
-        board.setCount(board.getCount() + 1);
     }
 
     // XXX: V2
@@ -221,6 +225,7 @@ public class GameController {
                 try {
                     movePlayerToSpace(target, player, heading);
                 } catch (ImpossibleMoveException e) {
+                    System.out.println("Impossible move");
                     // We do nothing here for now
                 }
             }
@@ -245,7 +250,7 @@ public class GameController {
                     movePlayerToSpace(target, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
-                    player.setSpace(current);
+                    player.setSpace(neighbour);
                     //Do nothing for now
                 }
             }
@@ -269,13 +274,14 @@ public class GameController {
                     movePlayerToSpace(neighbour, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
+                    player.setSpace(neighbour);
                     // Nothing for now
                 }
                 try {
                     movePlayerToSpace(target, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
-                    player.setSpace(current);
+                    player.setSpace(neighboursNeighbour);
                     //Do nothing for now
                 }
             }
@@ -343,5 +349,19 @@ public class GameController {
         if (board.getPhase() == Phase.ACTIVATION && !board.isStepMode()) {
             continuePrograms();
         }
+    }
+    public boolean wallCheck(Space space, Player player, Heading heading) {
+        Wall firstWall = player.getSpace().getWall();
+        Wall secondWall = space.getWall();
+        if (firstWall != null) {
+            if (firstWall.heading == heading) {
+                return false;
+            }
+        } if (secondWall != null) {
+            if (secondWall.heading.next().next() == heading) {
+                return false;
+            }
+        }
+        return true;
     }
 }
