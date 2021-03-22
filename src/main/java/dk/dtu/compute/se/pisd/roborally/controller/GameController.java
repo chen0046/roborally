@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.exceptions.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
@@ -386,5 +387,15 @@ public class GameController {
             }
         }
         return true;
+    }
+    public boolean winnerCheck(Space space, Player player) {
+        Checkpoint checkpoint = player.getSpace().getCheckpoint();
+        Checkpoint checkpointField = space.getCheckpoint();
+        if (checkpoint != null) {
+            if (checkpoint == checkpointField){
+                return true;
+            }
+        }
+        return false;
     }
 }
