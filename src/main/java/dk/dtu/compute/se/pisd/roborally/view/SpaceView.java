@@ -35,7 +35,12 @@ import org.jetbrains.annotations.NotNull;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @coauthor Andreas Vilstrup, s205450@student.dtu.dk
+ * @coauthor Oliver lyngholm Fiedler, s205423@student.dtu.dk
+ * @coauthor Isabel Jacobsen
+ * @coauthor Ahmad shereef
+ * @coauthor Alexander Solomon
+ * @coauthor Chenxi Cai
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
@@ -89,6 +94,10 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     * Here we added the new methods we created for the wall and the checkpoint
+     *
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
@@ -98,6 +107,9 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     * This method is used when we know we need a wall but we need to find out which direction it is going to be placed
+     */
     public void updateWall() {
         Wall wall = space.getWall();
         if (wall != null) {
@@ -115,6 +127,11 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
     }
+
+    /**
+     * Here are 4 methods for each direction a wall can have, the only difference in the methods is the gc.strokeline
+     * where we give the wall other coordinates.
+     */
     public void wallSouth() {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -156,6 +173,10 @@ public class SpaceView extends StackPane implements ViewObserver {
         gc.strokeLine(SPACE_WIDTH-2, SPACE_HEIGHT-2, SPACE_WIDTH-2 , SPACE_HEIGHT-73 );
         this.getChildren().add(canvas);
     }
+
+    /**
+     * Here we create the visual for the checkpoint (currently temporary design)
+     */
     public void checkpoint() {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -164,6 +185,10 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         this.getChildren().add(canvas);
     }
+
+    /**
+     * This method checks if there is supposed to be a checkpoint and places it if necessary, by calling checkpoint().
+     */
     public void updateCheckpoint() {
         Checkpoint checkpoint = space.getCheckpoint();
         if(checkpoint != null) {

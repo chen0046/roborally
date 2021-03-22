@@ -32,6 +32,12 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @coauthor Andreas Vilstrup, s205450@student.dtu.dk
+ * @coauthor Oliver lyngholm Fiedler, s205423@student.dtu.dk
+ * @coauthor Isabel Jacobsen
+ * @coauthor Ahmad shereef
+ * @coauthor Alexander Solomon
+ * @coauthor Chenxi Cai
  *
  */
 public class GameController {
@@ -70,6 +76,11 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * When this method is called upon, the programming phase initiates,
+     * and it lets you put programming cards in your programming field.
+     */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -223,6 +234,9 @@ public class GameController {
     }
 
     // TODO Assignment V2
+    /**
+     * Here we have all the different programming card functionalities, for the cards we have made so far.
+     */
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
             Heading heading = player.getHeading();
@@ -341,8 +355,7 @@ public class GameController {
     }
 
     /**
-     * A method called when no corresponding controller operation is implemented yet. This
-     * should eventually be removed.
+     * This method and the one underneath is made for a programming card that requires a player interaction
      */
     public void turnLeftOrRight(@NotNull Player player, Boolean choice) {
         if (choice) {
@@ -374,6 +387,14 @@ public class GameController {
             continuePrograms();
         }
     }
+
+    /**
+     * This method checks if a field has a wall and if the wall is going to collide based on the heading of the wall.
+     * @param space The space to which the current player is and the space to which the wall is.
+     * @param player The player whose turn it currently is
+     * @param heading The heading of the player
+     * @return Since it's a boolean it should return a true or a false depending on the outcome of the method
+     */
     public boolean wallCheck(Space space, Player player, Heading heading) {
         Wall firstWall = player.getSpace().getWall();
         Wall secondWall = space.getWall();
@@ -388,6 +409,13 @@ public class GameController {
         }
         return true;
     }
+
+    /**
+     * This method checks if a player has hit the final checkpoint (so far in our prototype we only have 1 checkpoint).
+     * @param space The space the current player in.
+     * @param player The player whose turn it currently is
+     * @return Since it's a boolean it should return a true or a false depending on the outcome of the method
+     */
     public boolean winnerCheck(Space space, Player player) {
         Checkpoint checkpoint = player.getSpace().getCheckpoint();
         Checkpoint checkpointField = space.getCheckpoint();
