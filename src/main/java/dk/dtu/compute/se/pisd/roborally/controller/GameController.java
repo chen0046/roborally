@@ -414,18 +414,15 @@ public class GameController {
     }
 
     /**
-     * This method checks if a player has hit the final checkpoint (so far in our prototype we only have 1 checkpoint).
+     * This method checks if a player has hit the final checkpoint (so far in our prototype we only have 1 checkpoint), and announces a winner.
      * @param space The space the current player in.
-     * @param player The player whose turn it currently is
+     * @param player The player whose turn it currently is (not used yet)
      * @return Since it's a boolean it should return a true or a false depending on the outcome of the method
      */
     public boolean winnerCheck(Space space, Player player) {
-        Checkpoint checkpoint = player.getSpace().getCheckpoint();
         Checkpoint checkpointField = space.getCheckpoint();
-        if (checkpoint != null) {
-            if (checkpoint == checkpointField){
+        if (checkpointField != null) {
                 return true;
-            }
         }
         return false;
     }
