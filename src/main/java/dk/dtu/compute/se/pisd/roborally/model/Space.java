@@ -30,6 +30,9 @@ import java.awt.*;
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
+ *
+ * We decided to give Space an extra class in its attributes to make it easy for us to attach a wall to a space.
+ * For now every space can only have 1 wall though.
  */
 public class Space extends Subject {
 
@@ -77,6 +80,10 @@ public class Space extends Subject {
         notifyChange();
     }
 
+    /**
+     * @return
+     * We utilized a getter and setter function to be able to check for a wall and create one as well.
+     */
     public Wall getWall() {
         return wall;
     }
