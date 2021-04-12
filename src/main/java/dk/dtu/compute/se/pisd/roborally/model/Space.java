@@ -44,7 +44,7 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
-    private List<Heading> walls = new ArrayList<>();
+    public List<Heading> walls = new ArrayList<>();
     private Checkpoint checkpoint;
 
     public Space(Board board, int x, int y) {

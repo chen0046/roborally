@@ -21,7 +21,6 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.exceptions.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +42,6 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
 public class GameController {
 
     final public Board board;
-
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -203,7 +201,7 @@ public class GameController {
 
     // XXX: V2
     private void executeCommand(@NotNull Player player, Command command) {
-        if (player != null && player.board == board && command != null) {
+        if (player.board == board && command != null) {
             // XXX This is a very simplistic way of dealing with some basic cards and
             //     their execution. This should eventually be done in a more elegant way
             //     (this concerns the way cards are modelled as well as the way they are executed).
@@ -399,14 +397,14 @@ public class GameController {
      * @return Since it's a boolean it should return a true or a false depending on the outcome of the method
      */
     public boolean wallCheck(Space space, Player player, Heading heading) {
-        Wall firstWall = player.getSpace().getWall();
-        Wall secondWall = space.getWall();
-        if (firstWall != null) {
-            if (firstWall.heading == heading) {
+        Space firstSpace = player.getSpace();
+        for (int i = 0; i < firstSpace.walls.size(); i++) {
+            if (firstSpace.walls.get(i) == heading) {
                 return false;
             }
-        } if (secondWall != null) {
-            if (secondWall.heading.next().next() == heading) {
+        }
+        for (int i = 0; i < space.walls.size(); i++) {
+            if (space.walls.get(i) == heading.next().next()) {
                 return false;
             }
         }
