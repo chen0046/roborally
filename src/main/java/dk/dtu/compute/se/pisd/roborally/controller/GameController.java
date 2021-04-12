@@ -234,7 +234,6 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
     /**
      * Here we have all the different programming card functionalities, for the cards we have made so far.
      */
@@ -254,7 +253,6 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
     public void fastForward(@NotNull Player player) {
         if (player.board == board) {
             Space current = player.getSpace();
@@ -321,7 +319,6 @@ public class GameController {
             }
         }
     }
-    // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Space current = player.getSpace();
         if (current != null && player.board == current.board) {
@@ -329,7 +326,6 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
     public void turnLeft(@NotNull Player player) {
         Space current = player.getSpace();
         if (current != null && player.board == current.board) {
