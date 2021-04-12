@@ -24,6 +24,8 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ...
@@ -42,7 +44,7 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
-    private Wall wall;
+    private List<Heading> walls = new ArrayList<>();
     private Checkpoint checkpoint;
 
     public Space(Board board, int x, int y) {
@@ -50,7 +52,6 @@ public class Space extends Subject {
         this.x = x;
         this.y = y;
         player = null;
-        wall = null;
         checkpoint = null;
     }
 
@@ -82,17 +83,18 @@ public class Space extends Subject {
         notifyChange();
     }
 
+    public List<Heading> getWalls() {
+        return walls;
+    }
+
+    public void setWalls(List<Heading> walls) {
+        this.walls = walls;
+    }
+
     /**
      * @return
      * We utilized a getter and setter function to be able to check for a wall and create one as well.
      */
-    public Wall getWall() {
-        return wall;
-    }
-
-    public void setWall(Heading heading) {
-        this.wall = new Wall(heading);
-    }
 
     public Checkpoint getCheckpoint() {
         return checkpoint;

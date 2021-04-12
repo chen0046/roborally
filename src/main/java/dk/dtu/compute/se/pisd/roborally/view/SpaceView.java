@@ -31,6 +31,8 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * ...
  *
@@ -111,19 +113,21 @@ public class SpaceView extends StackPane implements ViewObserver {
      * This method is used when we know we need a wall but we need to find out which direction it is going to be placed
      */
     public void updateWall() {
-        Wall wall = space.getWall();
-        if (wall != null) {
-            if (wall.heading == Heading.NORTH) {
-                wallNorth();
-            }
-            if (wall.heading == Heading.EAST) {
-                wallEast();
-            }
-            if (wall.heading == Heading.WEST) {
-                wallWest();
-            }
-            if (wall.heading == Heading.SOUTH) {
-                wallSouth();
+        List walls = space.getWalls();
+        if (walls != null) {
+            for (int i = 0; i < walls.size(); i++) {
+                if (walls.get(i) == Heading.NORTH) {
+                    wallNorth();
+                }
+                if (walls.get(i) == Heading.EAST) {
+                    wallEast();
+                }
+                if (walls.get(i) == Heading.WEST) {
+                    wallWest();
+                }
+                if (walls.get(i) == Heading.SOUTH) {
+                    wallSouth();
+                }
             }
         }
     }
