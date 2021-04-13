@@ -268,12 +268,12 @@ public class GameController {
                     System.out.println("Impossible move");
                     // Nothing for now
                 }
-                    try {
+                try {
                         movePlayerToSpace(target, player, heading);
-                    } catch (ImpossibleMoveException e) {
+                } catch (ImpossibleMoveException e) {
                         System.out.println("Impossible move");
                         //Do nothing for now
-                    }
+                }
             }
         }
     }
