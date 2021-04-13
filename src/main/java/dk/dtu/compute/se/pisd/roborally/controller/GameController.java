@@ -52,6 +52,7 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
+
     public void movePlayerToSpace(@NotNull Space space, @NotNull Player player, @NotNull Heading heading) throws ImpossibleMoveException {
         if(winnerCheck(space,player)){
             System.out.println(player.getName() + " tillykke, du har vundet!!!");
@@ -264,15 +265,15 @@ public class GameController {
                     movePlayerToSpace(neighbour, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
+                    System.out.println("Impossible move");
                     // Nothing for now
                 }
-                try {
-                    movePlayerToSpace(target, player, heading);
-                }
-                catch (ImpossibleMoveException e) {
-                    player.setSpace(neighbour);
-                    //Do nothing for now
-                }
+                    try {
+                        movePlayerToSpace(target, player, heading);
+                    } catch (ImpossibleMoveException e) {
+                        System.out.println("Impossible move");
+                        //Do nothing for now
+                    }
             }
         }
     }
@@ -294,14 +295,12 @@ public class GameController {
                     movePlayerToSpace(neighbour, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
-                    player.setSpace(neighbour);
                     // Nothing for now
                 }
                 try {
                     movePlayerToSpace(target, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
-                    player.setSpace(neighboursNeighbour);
                     //Do nothing for now
                 }
             }

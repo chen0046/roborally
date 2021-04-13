@@ -70,6 +70,7 @@ public class Board extends Subject {
         }
 
         spaces[7][7].setCheckpoint(1);
+        spaces[4][2].walls.add(Heading.NORTH);
         this.stepMode = false;
     }
 
