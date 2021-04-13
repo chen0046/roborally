@@ -356,10 +356,10 @@ public class GameController {
      */
     public void turnLeftOrRight(@NotNull Player player, Boolean choice) {
         if (choice) {
-            executeCommandAndContinue(Command.RIGHT, player);
+            executeCommandAndContinue(Command.LEFT, player);
         }
         else {
-            executeCommandAndContinue(Command.LEFT, player);
+            executeCommandAndContinue(Command.RIGHT, player);
         }
     }
 
