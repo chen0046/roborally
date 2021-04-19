@@ -64,7 +64,7 @@ class Repository implements IRepository {
 
 	private static final String PLAYER_HEADING = "heading";
 
-	private Connector connector;
+	private final Connector connector;
 	
 	Repository(Connector connector){
 		this.connector = connector;
