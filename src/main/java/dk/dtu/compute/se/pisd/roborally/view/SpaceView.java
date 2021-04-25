@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -106,7 +107,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
             updateWall();
             updateCheckpoint();
-            updateConveyor(space.board);
+            updateConveyor();
         }
     }
 
@@ -219,23 +220,19 @@ public class SpaceView extends StackPane implements ViewObserver {
         moveWest.setRotate(90);
         this.getChildren().add(moveWest);
     }
-    public void updateConveyor(Board board) {
-        List conveyorbelts = board.getConveyorBelts();
-        if (conveyorbelts != null) {
-            for (int i = 0; i < conveyorbelts.size(); i++) {
-                if (conveyorbelts.get(i) == Heading.NORTH) {
+    public void updateConveyor() {
+                if (space.isConveyor == Heading.NORTH) {
                     conveyorNorth();
                 }
-                if (conveyorbelts.get(i) == Heading.EAST) {
+                if (space.isConveyor == Heading.EAST) {
                     conveyorEast();
                 }
-                if (conveyorbelts.get(i) == Heading.WEST) {
+                if (space.isConveyor == Heading.WEST) {
                     conveyorWest();
                 }
-                if (conveyorbelts.get(i) == Heading.SOUTH) {
+                if (space.isConveyor == Heading.SOUTH) {
                     conveyorSouth();
                 }
-            }
         }
 
     }
@@ -243,4 +240,4 @@ public class SpaceView extends StackPane implements ViewObserver {
      * This method checks if there is supposed to be a checkpoint and places it if necessary, by calling checkpoint().
      */
 
-}
+
