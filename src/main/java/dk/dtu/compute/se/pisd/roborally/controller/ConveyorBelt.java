@@ -76,7 +76,7 @@ public class ConveyorBelt extends FieldAction {
                 e.printStackTrace();
             }
         }
-        if (prevSpace.isConveyor) {
+        if (prevSpace.isConveyor != null) {
             doAction(gameController, prevSpace);
         }
         return true;
