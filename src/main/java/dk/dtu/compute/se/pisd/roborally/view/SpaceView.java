@@ -189,6 +189,29 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         this.getChildren().add(canvas);
     }
+    public void conveyorSouth() {
+        Polygon moveSouth = new Polygon(10,35,25,60,40,35);
+        moveSouth.setStroke(Color.VIOLET);
+        this.getChildren().add(moveSouth);
+    }
+    public void conveyorNorth() {
+        Polygon moveNorth = new Polygon(10,35,25,60,40,35);
+        moveNorth.setStroke(Color.VIOLET);
+        moveNorth.setRotate(180);
+        this.getChildren().add(moveNorth);
+    }
+    public void conveyorEast() {
+        Polygon moveEast = new Polygon(10,35,25,60,40,35);
+        moveEast.setStroke(Color.VIOLET);
+        moveEast.setRotate(270);
+        this.getChildren().add(moveEast);
+    }
+    public void conveyorWest() {
+        Polygon moveWest = new Polygon(10,35,25,60,40,35);
+        moveWest.setStroke(Color.VIOLET);
+        moveWest.setRotate(90);
+        this.getChildren().add(moveWest);
+    }
 
     /**
      * This method checks if there is supposed to be a checkpoint and places it if necessary, by calling checkpoint().
