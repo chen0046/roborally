@@ -47,7 +47,7 @@ public class Space extends Subject {
     private Player player;
     public List<Heading> walls = new ArrayList<>();
     private Checkpoint checkpoint;
-    public FieldAction fieldAction;
+    public Boolean isConveyor;
 
     public Space(Board board, int x, int y) {
         this.board = board;

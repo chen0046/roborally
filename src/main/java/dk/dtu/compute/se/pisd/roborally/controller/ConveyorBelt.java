@@ -35,7 +35,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ConveyorBelt extends FieldAction {
 
-    private int length;
+    int length;
+    public int x;
+    public int y;
 
     public int getLength() {
         return length;
@@ -55,9 +57,11 @@ public class ConveyorBelt extends FieldAction {
         this.heading = heading;
     }
 
-    public ConveyorBelt(int length, Heading heading) {
+    public ConveyorBelt(int length, Heading heading, int x, int y) {
         setLength(length);
         setHeading(heading);
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -72,7 +76,9 @@ public class ConveyorBelt extends FieldAction {
                 e.printStackTrace();
             }
         }
-        doAction(gameController, prevSpace);
+        if (prevSpace.isConveyor) {
+            doAction(gameController, prevSpace);
+        }
         return true;
         // TODO needs to be implemented
     }
