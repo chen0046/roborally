@@ -106,6 +106,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
             updateWall();
             updateCheckpoint();
+            updateConveyor(space.board);
         }
     }
 
@@ -189,6 +190,12 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         this.getChildren().add(canvas);
     }
+    public void updateCheckpoint() {
+        Checkpoint checkpoint = space.getCheckpoint();
+        if(checkpoint != null) {
+            checkpoint();
+        }
+    }
     public void conveyorSouth() {
         Polygon moveSouth = new Polygon(10,35,25,60,40,35);
         moveSouth.setStroke(Color.VIOLET);
@@ -212,14 +219,28 @@ public class SpaceView extends StackPane implements ViewObserver {
         moveWest.setRotate(90);
         this.getChildren().add(moveWest);
     }
+    public void updateConveyor(Board board) {
+        List conveyorbelts = board.getConveyorBelts();
+        if (conveyorbelts != null) {
+            for (int i = 0; i < conveyorbelts.size(); i++) {
+                if (conveyorbelts.get(i) == Heading.NORTH) {
+                    conveyorNorth();
+                }
+                if (conveyorbelts.get(i) == Heading.EAST) {
+                    conveyorEast();
+                }
+                if (conveyorbelts.get(i) == Heading.WEST) {
+                    conveyorWest();
+                }
+                if (conveyorbelts.get(i) == Heading.SOUTH) {
+                    conveyorSouth();
+                }
+            }
+        }
 
+    }
     /**
      * This method checks if there is supposed to be a checkpoint and places it if necessary, by calling checkpoint().
      */
-    public void updateCheckpoint() {
-        Checkpoint checkpoint = space.getCheckpoint();
-        if(checkpoint != null) {
-            checkpoint();
-        }
-    }
+
 }

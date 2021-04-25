@@ -232,6 +232,11 @@ public class Board extends Subject {
             notifyChange();
         }
     }
+
+    public List<ConveyorBelt> getConveyorBelts() {
+        return conveyorBelts;
+    }
+
     public void setConveyor() {
         for (int i = 0; i < conveyorBelts.size(); i++) {
             ConveyorBelt conveyorBelt = conveyorBelts.get(i);
