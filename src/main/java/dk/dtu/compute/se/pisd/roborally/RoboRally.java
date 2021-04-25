@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally;
 
+import com.sun.jdi.connect.Connector;
 import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.view.BoardView;
