@@ -21,7 +21,9 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.exceptions.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +35,16 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ConveyorBelt extends FieldAction {
 
+    private int length;
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
     private Heading heading;
 
     public Heading getHeading() {
@@ -43,10 +55,26 @@ public class ConveyorBelt extends FieldAction {
         this.heading = heading;
     }
 
+    public ConveyorBelt(int length, Heading heading) {
+        setLength(length);
+        setHeading(heading);
+    }
+
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
+        Space prevSpace = gameController.board.getNeighbour(space, heading.next().next());
+        Space nextSpace = gameController.board.getNeighbour(space, heading);
+        if(space.getPlayer() != null) {
+            try {
+                gameController.movePlayerToSpace(nextSpace, space.getPlayer(), heading);
+            }
+            catch (ImpossibleMoveException e) {
+                e.printStackTrace();
+            }
+        }
+        doAction(gameController, prevSpace);
+        return true;
         // TODO needs to be implemented
-        return false;
     }
 
 }

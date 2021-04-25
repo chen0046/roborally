@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
+    List<ConveyorBelt> conveyorBelts = new ArrayList<>();
+
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
@@ -71,6 +74,7 @@ public class Board extends Subject {
 
         spaces[7][7].setCheckpoint(1);
         spaces[4][2].walls.add(Heading.NORTH);
+        conveyorBelts.add(new ConveyorBelt(10, Heading.SOUTH));
         this.stepMode = false;
     }
 
