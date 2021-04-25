@@ -74,7 +74,7 @@ public class Board extends Subject {
 
         spaces[7][7].setCheckpoint(1);
         spaces[4][2].walls.add(Heading.NORTH);
-        conveyorBelts.add(new ConveyorBelt(10, Heading.SOUTH, 3, 2));
+        conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 6, 5));
         this.stepMode = false;
         setConveyor();
     }
@@ -243,7 +243,7 @@ public class Board extends Subject {
             Space currentSpace = spaces[conveyorBelt.x][conveyorBelt.y];
             for (int j = 0; j < conveyorBelt.getLength(); j++) {
                 currentSpace.isConveyor = conveyorBelt.getHeading();
-                currentSpace = getNeighbour(currentSpace, conveyorBelt.getHeading());
+                currentSpace = getNeighbour(currentSpace, conveyorBelt.getHeading().next().next());
             }
         }
     }

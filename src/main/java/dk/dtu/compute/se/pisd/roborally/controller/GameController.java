@@ -186,6 +186,7 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(0));
                     } else {
+                        moveOnConveyor();
                         startProgrammingPhase();
                     }
                 }
@@ -417,5 +418,12 @@ public class GameController {
                 return true;
         }
         return false;
+    }
+    public void moveOnConveyor() {
+        for (int i = 0; i < board.getConveyorBelts().size(); i++) {
+            ConveyorBelt conveyorBelt = board.getConveyorBelts().get(i);
+            Space space = board.getSpace(conveyorBelt.x, conveyorBelt.y);
+            conveyorBelt.doAction(this, space);
+        }
     }
 }
