@@ -73,7 +73,6 @@ public class GameController {
             board.setCurrentPlayer(nextPlayer);
             board.setCount(board.getCount() + 1);
         } else {
-            throw new ImpossibleMoveException(player, space, heading);
         }
     }
 
