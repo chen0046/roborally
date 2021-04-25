@@ -237,7 +237,7 @@ public class Board extends Subject {
             ConveyorBelt conveyorBelt = conveyorBelts.get(i);
             Space currentSpace = spaces[conveyorBelt.x][conveyorBelt.y];
             for (int j = 0; j < conveyorBelt.getLength(); j++) {
-                currentSpace.isConveyor = true;
+                currentSpace.isConveyor = conveyorBelt.getHeading();
                 currentSpace = getNeighbour(currentSpace, conveyorBelt.getHeading());
             }
         }
