@@ -67,7 +67,6 @@ public class AppController implements Observer {
         dialog.setTitle("Player number");
         dialog.setHeaderText("Select number of players");
         Optional<Integer> result = dialog.showAndWait();
-
         if (result.isPresent()) {
             if (gameController != null) {
                 // The UI should not allow this, but in case this happens anyway.
@@ -98,13 +97,6 @@ public class AppController implements Observer {
 
     public void saveGame() {
         // XXX needs to be implemented eventually
-        int currentGameID = gameController.board.getGameId();
-        List<GameInDB> currentGames = RepositoryAccess.getRepository().getGames();
-        for (int i = 0; i < currentGames.size(); i++) {
-            if (currentGames.get(i).id == currentGameID) {
-                RepositoryAccess.getRepository().updateGameInDB(gameController.board);
-            }
-        }
         RepositoryAccess.getRepository().createGameInDB(gameController.board);
     }
 
