@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.List;
  *
  *
  * We decided to give Space an extra class in its attributes to make it easy for us to attach a wall to a space.
- * For now every space can only have 1 wall though.
+ * Spaces now have list of walls, so each space can have several walls.
  */
 public class Space extends Subject {
 
@@ -46,6 +47,7 @@ public class Space extends Subject {
     private Player player;
     public List<Heading> walls = new ArrayList<>();
     private Checkpoint checkpoint;
+    public Heading isConveyor;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -103,4 +105,5 @@ public class Space extends Subject {
     public void setCheckpoint(int priority) {
         this.checkpoint = new Checkpoint(priority);
     }
+
 }

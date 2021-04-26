@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -106,6 +107,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
             updateWall();
             updateCheckpoint();
+            updateConveyor();
         }
     }
 
@@ -189,14 +191,53 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         this.getChildren().add(canvas);
     }
-
-    /**
-     * This method checks if there is supposed to be a checkpoint and places it if necessary, by calling checkpoint().
-     */
     public void updateCheckpoint() {
         Checkpoint checkpoint = space.getCheckpoint();
         if(checkpoint != null) {
             checkpoint();
         }
     }
-}
+    public void conveyorSouth() {
+        Polygon moveSouth = new Polygon(10,35,25,60,40,35);
+        moveSouth.setStroke(Color.VIOLET);
+        this.getChildren().add(moveSouth);
+    }
+    public void conveyorNorth() {
+        Polygon moveNorth = new Polygon(10,35,25,60,40,35);
+        moveNorth.setStroke(Color.VIOLET);
+        moveNorth.setRotate(180);
+        this.getChildren().add(moveNorth);
+    }
+    public void conveyorEast() {
+        Polygon moveEast = new Polygon(10,35,25,60,40,35);
+        moveEast.setStroke(Color.VIOLET);
+        moveEast.setRotate(270);
+        this.getChildren().add(moveEast);
+    }
+    public void conveyorWest() {
+        Polygon moveWest = new Polygon(10,35,25,60,40,35);
+        moveWest.setStroke(Color.VIOLET);
+        moveWest.setRotate(90);
+        this.getChildren().add(moveWest);
+    }
+    public void updateConveyor() {
+                if (space.isConveyor == Heading.NORTH) {
+                    conveyorNorth();
+                }
+                if (space.isConveyor == Heading.EAST) {
+                    conveyorEast();
+                }
+                if (space.isConveyor == Heading.WEST) {
+                    conveyorWest();
+                }
+                if (space.isConveyor == Heading.SOUTH) {
+                    conveyorSouth();
+                }
+        }
+
+    }
+    /**
+     * This method checks if there is supposed to be a checkpoint and places it if necessary, by calling checkpoint().
+     */
+
+

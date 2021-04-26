@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
+    List<ConveyorBelt> conveyorBelts = new ArrayList<>();
+
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
@@ -71,7 +74,9 @@ public class Board extends Subject {
 
         spaces[7][7].setCheckpoint(1);
         spaces[4][2].walls.add(Heading.NORTH);
+        conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 6, 5));
         this.stepMode = false;
+        setConveyor();
     }
 
     public Board(int width, int height) {
@@ -225,6 +230,21 @@ public class Board extends Subject {
         if (this.count != count) {
             this.count = count;
             notifyChange();
+        }
+    }
+
+    public List<ConveyorBelt> getConveyorBelts() {
+        return conveyorBelts;
+    }
+
+    public void setConveyor() {
+        for (int i = 0; i < conveyorBelts.size(); i++) {
+            ConveyorBelt conveyorBelt = conveyorBelts.get(i);
+            Space currentSpace = spaces[conveyorBelt.x][conveyorBelt.y];
+            for (int j = 0; j < conveyorBelt.getLength(); j++) {
+                currentSpace.isConveyor = conveyorBelt.getHeading();
+                currentSpace = getNeighbour(currentSpace, conveyorBelt.getHeading().next().next());
+            }
         }
     }
 }
