@@ -54,9 +54,6 @@ public class GameController {
      */
 
     public void movePlayerToSpace(@NotNull Space space, @NotNull Player player, @NotNull Heading heading) throws ImpossibleMoveException {
-        if(winnerCheck(space,player)){
-            System.out.println(player.getName() + " tillykke, du har vundet!!!");
-        }
         Player other = space.getPlayer();
         if (wallCheck(space, player, heading)) {
             if (other != null) {
@@ -72,6 +69,8 @@ public class GameController {
             Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
             board.setCurrentPlayer(nextPlayer);
             board.setCount(board.getCount() + 1);
+        } else {
+            throw new ImpossibleMoveException(player, space, heading);
         }
     }
 
@@ -255,53 +254,32 @@ public class GameController {
 
     public void fastForward(@NotNull Player player) {
         if (player.board == board) {
-            Space current = player.getSpace();
             Heading heading = player.getHeading();
-            Space neighbour = board.getNeighbour(current, heading);
-            Space target = board.getNeighbour(neighbour, heading);
-            if (target != null) {
+            for (int i = 0; i < 2; i++) {
+                Space current = player.getSpace();
+                Space neighbor = board.getNeighbour(current, heading);
                 try {
-                    movePlayerToSpace(neighbour, player, heading);
+                    movePlayerToSpace(neighbor, player, heading);
                 } catch (ImpossibleMoveException e) {
                     System.out.println("Impossible move");
-                    // Nothing for now
-                }
-                try {
-                        movePlayerToSpace(target, player, heading);
-                } catch (ImpossibleMoveException e) {
-                        System.out.println("Impossible move");
-                        //Do nothing for now
+                    break;
                 }
             }
         }
     }
     public void fasterForward(@NotNull Player player) {
         if (player.board == board) {
-            Space current = player.getSpace();
             Heading heading = player.getHeading();
-            Space neighbour = board.getNeighbour(current, heading);
-            Space neighboursNeighbour = board.getNeighbour(neighbour, heading);
-            Space target = board.getNeighbour(neighboursNeighbour, heading);
-            if (target != null) {
-                try {
-                    movePlayerToSpace(neighbour, player, heading);
+                for (int i = 0; i < 3; i++) {
+                    Space current = player.getSpace();
+                    Space neighbor = board.getNeighbour(current, heading);
+                    try {
+                        movePlayerToSpace(neighbor, player, heading);
+                    } catch (ImpossibleMoveException e) {
+                        System.out.println("Impossible move");
+                        break;
+                    }
                 }
-                catch (ImpossibleMoveException e) {
-                    System.out.println("Impossible move");
-                }
-                try {
-                    movePlayerToSpace(neighboursNeighbour, player, heading);
-                }
-                catch (ImpossibleMoveException e) {
-                    System.out.println("Impossible move");
-                }
-                try {
-                    movePlayerToSpace(target, player, heading);
-                }
-                catch (ImpossibleMoveException e) {
-                    System.out.println("Impossible move");
-                }
-            }
         }
     }
     public void moveBack(@NotNull Player player) {
