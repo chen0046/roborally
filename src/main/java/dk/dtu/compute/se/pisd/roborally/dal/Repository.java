@@ -143,6 +143,7 @@ class Repository implements IRepository {
 			}
 		} else {
 			System.err.println("Game cannot be created in DB, since it has a game id already!");
+			updateGameInDB(game);
 		}
 		return false;
 	}

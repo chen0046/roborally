@@ -52,7 +52,6 @@ class Connector {
 			// String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
 			connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
-			createDatabaseSchema();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("SQL error!");

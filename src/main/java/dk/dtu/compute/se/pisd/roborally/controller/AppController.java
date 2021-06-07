@@ -38,10 +38,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * ...
@@ -90,7 +87,6 @@ public class AppController implements Observer {
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
-
             roboRally.createBoardView(gameController);
         }
     }
@@ -103,9 +99,10 @@ public class AppController implements Observer {
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
-        if (gameController == null) {
-            newGame();
-        }
+        Board loadedBoard = RepositoryAccess.getRepository().loadGameFromDB(8);
+        gameController = new GameController(loadedBoard);
+        gameController.startProgrammingPhase();
+        roboRally.createBoardView(gameController);
 
     }
 
