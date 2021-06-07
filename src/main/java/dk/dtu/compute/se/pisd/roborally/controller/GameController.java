@@ -61,10 +61,10 @@ public class GameController {
         if (wallCheck(space, player, heading)) {
             if (other != null) {
                 Space target = board.getNeighbour(space, heading);
-                if (target != null) {
-                    movePlayerToSpace(target, other, heading);
-                } else {
+                if (wallCheck(board.getNeighbour(target,heading), other , heading)) {
                     throw new ImpossibleMoveException(player, space, heading);
+                } else if (target != null) {
+                    movePlayerToSpace(target, other, heading);
                 }
             }
             player.setSpace(space);
@@ -262,8 +262,7 @@ public class GameController {
             if (target != null) {
                 try {
                     movePlayerToSpace(neighbour, player, heading);
-                }
-                catch (ImpossibleMoveException e) {
+                } catch (ImpossibleMoveException e) {
                     System.out.println("Impossible move");
                     // Nothing for now
                 }
@@ -288,19 +287,19 @@ public class GameController {
                     movePlayerToSpace(neighbour, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
-                    // Nothing for now
+                    System.out.println("Impossible move");
                 }
                 try {
-                    movePlayerToSpace(neighbour, player, heading);
+                    movePlayerToSpace(neighboursNeighbour, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
-                    // Nothing for now
+                    System.out.println("Impossible move");
                 }
                 try {
                     movePlayerToSpace(target, player, heading);
                 }
                 catch (ImpossibleMoveException e) {
-                    //Do nothing for now
+                    System.out.println("Impossible move");
                 }
             }
         }
