@@ -20,7 +20,5 @@ public class ImpossibleMoveException extends Exception {
         this.space = space;
         this.heading = heading;
 
-
-
     }
 }

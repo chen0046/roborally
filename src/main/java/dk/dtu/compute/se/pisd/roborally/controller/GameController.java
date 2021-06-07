@@ -72,7 +72,6 @@ public class GameController {
             Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
             board.setCurrentPlayer(nextPlayer);
             board.setCount(board.getCount() + 1);
-        } else {
         }
     }
 
