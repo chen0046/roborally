@@ -26,6 +26,7 @@ import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -184,16 +185,17 @@ public class SpaceView extends StackPane implements ViewObserver {
      * Here we create the visual for the checkpoint (currently temporary design)
      */
     public void checkpoint() {
+        int priority = space.getCheckpoint();
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.MAGENTA);
-        gc.strokeText("CHECKPOINT",10,SPACE_HEIGHT-10,SPACE_WIDTH-20);
+        gc.strokeText("CHECKPOINT\n\t" + priority,10,SPACE_HEIGHT-30,SPACE_WIDTH-20);
 
         this.getChildren().add(canvas);
     }
     public void updateCheckpoint() {
-        Checkpoint checkpoint = space.getCheckpoint();
-        if(checkpoint != null) {
+        int checkpoint = space.getCheckpoint();
+        if(checkpoint != -1) {
             checkpoint();
         }
     }

@@ -42,6 +42,8 @@ public class Player extends Subject {
     private String name;
     private String color;
 
+    public int checkpointsReached = 0;
+
     private Space space;
     private Heading heading = SOUTH;
 
@@ -52,7 +54,6 @@ public class Player extends Subject {
         this.board = board;
         this.name = name;
         this.color = color;
-
         this.space = null;
 
         program = new CommandCardField[NO_REGISTERS];
@@ -64,6 +65,7 @@ public class Player extends Subject {
         for (int i = 0; i < cards.length; i++) {
             cards[i] = new CommandCardField(this);
         }
+
     }
 
     public String getName() {
@@ -123,6 +125,14 @@ public class Player extends Subject {
                 space.playerChanged();
             }
         }
+    }
+
+    public int getCheckpointsReached() {
+        return checkpointsReached;
+    }
+
+    public void setCheckpointsReached(int checkpointsReached) {
+        this.checkpointsReached = checkpointsReached;
     }
 
     public CommandCardField getProgramField(int i) {

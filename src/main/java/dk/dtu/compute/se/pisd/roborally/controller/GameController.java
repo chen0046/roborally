@@ -67,14 +67,35 @@ public class GameController {
                     movePlayerToSpace(target, other, heading);
                 }
             }
-            player.setSpace(space);
-            int playerNumber = board.getPlayerNumber(player);
-            Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
-            board.setCurrentPlayer(nextPlayer);
-            board.setCount(board.getCount() + 1);
+        } else {
+            throw new ImpossibleMoveException(player, space, heading);
         }
+        player.setSpace(space);
+        checkCheckpoints(space,player);
+        nextPlayerTurn(space,player);
+
     }
 
+    public void nextPlayerTurn(@NotNull Space space, Player player) {
+        int playerNumber = board.getPlayerNumber(player);
+        Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
+        board.setCurrentPlayer(nextPlayer);
+        board.setCount(board.getCount() + 1);
+    }
+
+    public void checkCheckpoints(@NotNull Space space, Player player) {
+        int playerCheckpoint = player.checkpointsReached;
+        if (space.getCheckpoint() != -1) {
+            if (space.getCheckpoint() - 1 == playerCheckpoint) {
+                player.setCheckpointsReached(playerCheckpoint + 1);
+                System.out.println(space.getPlayer().getName() + ", du har nu ramt checkpoint " + space.getCheckpoint());
+            } else if (space.getCheckpoint() <= playerCheckpoint) {
+                System.out.println(space.getPlayer().getName() + ", du har allerede været forbi dette checkpoint");
+            } else {
+                System.out.println(space.getPlayer().getName() + ", du er ikke nået til dette checkpoint endnu");
+            }
+        }
+    }
     // XXX: V2
 
     /**
@@ -255,50 +276,32 @@ public class GameController {
 
     public void fastForward(@NotNull Player player) {
         if (player.board == board) {
-            Space current = player.getSpace();
             Heading heading = player.getHeading();
-            Space neighbour = board.getNeighbour(current, heading);
-            Space target = board.getNeighbour(neighbour, heading);
-            if (target != null) {
+            for (int i = 0; i < 2; i++) {
+                Space current = player.getSpace();
+                Space neighbor = board.getNeighbour(current, heading);
                 try {
-                    movePlayerToSpace(neighbour, player, heading);
+                    movePlayerToSpace(neighbor, player, heading);
                 } catch (ImpossibleMoveException e) {
                     System.out.println("Impossible move");
-                    // Nothing for now
-                }
-                try {
-                        movePlayerToSpace(target, player, heading);
-                } catch (ImpossibleMoveException e) {
-                        System.out.println("Impossible move");
-                        //Do nothing for now
+                    break;
                 }
             }
         }
     }
     public void fasterForward(@NotNull Player player) {
         if (player.board == board) {
-            Space current = player.getSpace();
             Heading heading = player.getHeading();
-            Space neighbour = board.getNeighbour(current, heading);
-            Space neighboursNeighbour = board.getNeighbour(neighbour, heading);
-            Space target = board.getNeighbour(neighboursNeighbour, heading);
-            if (target != null) {
-                try {
-                    movePlayerToSpace(neighbour, player, heading);
-                } catch (ImpossibleMoveException e) {
-                    System.out.println("Impossible move");
+                for (int i = 0; i < 3; i++) {
+                    Space current = player.getSpace();
+                    Space neighbor = board.getNeighbour(current, heading);
+                    try {
+                        movePlayerToSpace(neighbor, player, heading);
+                    } catch (ImpossibleMoveException e) {
+                        System.out.println("Impossible move");
+                        break;
+                    }
                 }
-                try {
-                    movePlayerToSpace(neighboursNeighbour, player, heading);
-                } catch (ImpossibleMoveException e) {
-                    System.out.println("Impossible move");
-                }
-                try {
-                    movePlayerToSpace(target, player, heading);
-                } catch (ImpossibleMoveException e) {
-                    System.out.println("Impossible move");
-                }
-            }
         }
     }
     public void moveBack(@NotNull Player player) {
@@ -401,19 +404,7 @@ public class GameController {
         return true;
     }
 
-    /**
-     * This method checks if a player has hit the final checkpoint (so far in our prototype we only have 1 checkpoint), and announces a winner.
-     * @param space The space the current player in.
-     * @param player The player whose turn it currently is (not used yet)
-     * @return Since it's a boolean it should return a true or a false depending on the outcome of the method
-     */
-    public boolean winnerCheck(Space space, Player player) {
-        Checkpoint checkpointField = space.getCheckpoint();
-        if (checkpointField != null) {
-                return true;
-        }
-        return false;
-    }
+
     public void moveOnConveyor() {
         for (int i = 0; i < board.getConveyorBelts().size(); i++) {
             ConveyorBelt conveyorBelt = board.getConveyorBelts().get(i);

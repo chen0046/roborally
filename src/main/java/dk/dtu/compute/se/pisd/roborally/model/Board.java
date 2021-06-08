@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
@@ -73,7 +74,9 @@ public class Board extends Subject {
         }
 
         spaces[7][7].setCheckpoint(1);
+        spaces[5][6].setCheckpoint(2);
         spaces[4][2].walls.add(Heading.NORTH);
+        spaces[4][2].walls.add(Heading.EAST);
         conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 6, 5));
         this.stepMode = false;
         setConveyor();
