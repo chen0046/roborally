@@ -22,13 +22,12 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.CheckBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
@@ -105,6 +104,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             this.getChildren().clear();
+            updateHole();
             updateWall();
             updateCheckpoint();
             updateConveyor();
@@ -223,23 +223,31 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().add(moveWest);
     }
     public void updateConveyor() {
-                if (space.isConveyor == Heading.NORTH) {
-                    conveyorNorth();
-                }
-                if (space.isConveyor == Heading.EAST) {
-                    conveyorEast();
-                }
-                if (space.isConveyor == Heading.WEST) {
-                    conveyorWest();
-                }
-                if (space.isConveyor == Heading.SOUTH) {
-                    conveyorSouth();
-                }
+        if (space.isConveyor == Heading.NORTH) {
+            conveyorNorth();
         }
-
+        if (space.isConveyor == Heading.EAST) {
+            conveyorEast();
+        }
+        if (space.isConveyor == Heading.WEST) {
+            conveyorWest();
+        }
+        if (space.isConveyor == Heading.SOUTH) {
+            conveyorSouth();
+        }
     }
-    /**
-     * This method checks if there is supposed to be a checkpoint and places it if necessary, by calling checkpoint().
-     */
+    public void hole() {
+        Circle redHole = new Circle(30,Color.DARKRED);
+        this.getChildren().add(redHole);
+    }
+
+    public void updateHole() {
+        int placeHole = space.getHole();
+        if(placeHole == 1) {
+            hole();
+        }
+    }
+}
+
 
 

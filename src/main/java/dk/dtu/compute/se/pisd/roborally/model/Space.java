@@ -48,6 +48,7 @@ public class Space extends Subject {
     public List<Heading> walls = new ArrayList<>();
     private int checkpoint;
     public Heading isConveyor;
+    private int hole;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -55,6 +56,7 @@ public class Space extends Subject {
         this.y = y;
         player = null;
         checkpoint = -1;
+        hole = -1;
     }
 
     public Player getPlayer() {
@@ -89,10 +91,6 @@ public class Space extends Subject {
         return walls;
     }
 
-    public void setWalls(List<Heading> walls) {
-        this.walls = walls;
-    }
-
     /**
      * @return
      * We utilized a getter and setter function to be able to check for a wall and create one as well.
@@ -102,9 +100,15 @@ public class Space extends Subject {
         return checkpoint;
     }
 
-
     public void setCheckpoint(int priority) {
         this.checkpoint = priority;
     }
 
+    public int getHole() {
+        return hole;
+    }
+
+    public void setHole(int hole) {
+        this.hole = hole;
+    }
 }
