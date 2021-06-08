@@ -22,10 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.dal;
 
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Phase;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,34 +36,38 @@ import java.util.List;
  *
  */
 class Repository implements IRepository {
-	
+
 	private static final String GAME_GAMEID = "gameID";
 
 	private static final String GAME_NAME = "name";
-	
+
 	private static final String GAME_CURRENTPLAYER = "currentPlayer";
 
 	private static final String GAME_PHASE = "phase";
 
 	private static final String GAME_STEP = "step";
-	
+
 	private static final String PLAYER_PLAYERID = "playerID";
-	
+
 	private static final String PLAYER_NAME = "name";
 
 	private static final String PLAYER_COLOUR = "colour";
-	
+
 	private static final String PLAYER_GAMEID = "gameID";
-	
+
 	private static final String PLAYER_POSITION_X = "positionX";
 
 	private static final String PLAYER_POSITION_Y = "positionY";
 
 	private static final String PLAYER_HEADING = "heading";
 
+	private static final int FIELD_TYPE_REGISTER = 0;
+
+	private static final int FIELD_TYPE_HAND = 1;
+
 	private final Connector connector;
-	
-	Repository(Connector connector){
+
+	Repository(Connector connector) {
 		this.connector = connector;
 	}
 
@@ -81,7 +82,7 @@ class Repository implements IRepository {
 				// TODO: the name should eventually set by the user
 				//       for the game and should be then used 
 				//       game.getName();
-				ps.setString(1, "Date: " +  new Date()); // instead of name
+				ps.setString(1, "Date: " + new Date()); // instead of name
 				ps.setNull(2, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
 				ps.setInt(3, game.getPhase().ordinal());
 				ps.setInt(4, game.getStep());
@@ -92,22 +93,21 @@ class Repository implements IRepository {
 				// validates on a per row basis.
 				// Statement statement = connection.createStatement();
 				// statement.execute("SET foreign_key_checks = 0");
-				
+
 				int affectedRows = ps.executeUpdate();
 				ResultSet generatedKeys = ps.getGeneratedKeys();
 				if (affectedRows == 1 && generatedKeys.next()) {
 					game.setGameId(generatedKeys.getInt(1));
 				}
 				generatedKeys.close();
-				
+
 				// Enable foreign key constraint check again:
 				// statement.execute("SET foreign_key_checks = 1");
 				// statement.close();
 
 				createPlayersInDB(game);
-				/* TODO this method needs to be implemented first
 				createCardFieldsInDB(game);
-				 */
+
 
 				// since current player is a foreign key, it can oly be
 				// inserted after the players are created, since MySQL does
@@ -132,7 +132,7 @@ class Repository implements IRepository {
 				// TODO error handling
 				e.printStackTrace();
 				System.err.println("Some DB error");
-				
+
 				try {
 					connection.rollback();
 					connection.setAutoCommit(true);
@@ -144,21 +144,22 @@ class Repository implements IRepository {
 		} else {
 			System.err.println("Game cannot be created in DB, since it has a game id already!");
 			updateGameInDB(game);
+			return true;
 		}
 		return false;
 	}
-		
+
 	@Override
 	public boolean updateGameInDB(Board game) {
 		assert game.getGameId() != null;
-		
+
 		Connection connection = connector.getConnection();
 		try {
 			connection.setAutoCommit(false);
 
 			PreparedStatement ps = getSelectGameStatementU();
 			ps.setInt(1, game.getGameId());
-			
+
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				rs.updateInt(GAME_CURRENTPLAYER, game.getPlayerNumber(game.getCurrentPlayer()));
@@ -175,14 +176,14 @@ class Repository implements IRepository {
 			updateCardFieldsInDB(game);
 			*/
 
-            connection.commit();
-            connection.setAutoCommit(true);
+			connection.commit();
+			connection.setAutoCommit(true);
 			return true;
 		} catch (SQLException e) {
 			// TODO error handling
 			e.printStackTrace();
 			System.err.println("Some DB error");
-			
+
 			try {
 				connection.rollback();
 				connection.setAutoCommit(true);
@@ -194,7 +195,7 @@ class Repository implements IRepository {
 
 		return false;
 	}
-	
+
 	@Override
 	public Board loadGameFromDB(int id) {
 		Board game;
@@ -204,7 +205,7 @@ class Repository implements IRepository {
 			//      above for the pupose
 			PreparedStatement ps = getSelectGameStatementU();
 			ps.setInt(1, id);
-			
+
 			ResultSet rs = ps.executeQuery();
 			int playerNo = -1;
 			if (rs.next()) {
@@ -228,8 +229,9 @@ class Repository implements IRepository {
 			}
 			rs.close();
 
-			game.setGameId(id);			
+			game.setGameId(id);
 			loadPlayersFromDB(game);
+			loadCardFieldsFromDB(game);
 
 			if (playerNo >= 0 && playerNo < game.getPlayersNumber()) {
 				game.setCurrentPlayer(game.getPlayer(playerNo));
@@ -250,7 +252,7 @@ class Repository implements IRepository {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public List<GameInDB> getGames() {
 		// TODO when there many games in the DB, fetching all available games
@@ -264,21 +266,21 @@ class Repository implements IRepository {
 			while (rs.next()) {
 				int id = rs.getInt(GAME_GAMEID);
 				String name = rs.getString(GAME_NAME);
-				result.add(new GameInDB(id,name));
+				result.add(new GameInDB(id, name));
 			}
 			rs.close();
 		} catch (SQLException e) {
 			// TODO proper error handling
 			e.printStackTrace();
 		}
-		return result;		
+		return result;
 	}
 
 	private void createPlayersInDB(Board game) throws SQLException {
 		// TODO code should be more defensive
 		PreparedStatement ps = getSelectPlayersStatementU();
 		ps.setInt(1, game.getGameId());
-		
+
 		ResultSet rs = ps.executeQuery();
 		for (int i = 0; i < game.getPlayersNumber(); i++) {
 			Player player = game.getPlayer(i);
@@ -295,11 +297,12 @@ class Repository implements IRepository {
 
 		rs.close();
 	}
-	
+
+
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
-		
+
 		ResultSet rs = ps.executeQuery();
 		int i = 0;
 		while (rs.next()) {
@@ -308,28 +311,28 @@ class Repository implements IRepository {
 				// TODO this should be more defensive
 				String name = rs.getString(PLAYER_NAME);
 				String colour = rs.getString(PLAYER_COLOUR);
-				Player player = new Player(game, colour ,name);
+				Player player = new Player(game, colour, name);
 				game.addPlayer(player);
-				
+
 				int x = rs.getInt(PLAYER_POSITION_X);
 				int y = rs.getInt(PLAYER_POSITION_Y);
-				player.setSpace(game.getSpace(x,y));
+				player.setSpace(game.getSpace(x, y));
 				int heading = rs.getInt(PLAYER_HEADING);
 				player.setHeading(Heading.values()[heading]);
 
 				// TODO  should also load players program and hand here
 			} else {
 				// TODO error handling
-				System.err.println("Game in DB does not have a player with id " + i +"!");
+				System.err.println("Game in DB does not have a player with id " + i + "!");
 			}
 		}
 		rs.close();
 	}
-	
+
 	private void updatePlayersInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersStatementU();
 		ps.setInt(1, game.getGameId());
-		
+
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			int playerId = rs.getInt(PLAYER_PLAYERID);
@@ -344,7 +347,7 @@ class Repository implements IRepository {
 			rs.updateRow();
 		}
 		rs.close();
-		
+
 		// TODO error handling/consistency check: check whether all players were updated
 	}
 
@@ -368,11 +371,12 @@ class Repository implements IRepository {
 		return insert_game_stmt;
 	}
 
+
 	private static final String SQL_SELECT_GAME =
 			"SELECT * FROM Game WHERE gameID = ?";
-	
+
 	private PreparedStatement select_game_stmt = null;
-	
+
 	private PreparedStatement getSelectGameStatementU() {
 		if (select_game_stmt == null) {
 			Connection connection = connector.getConnection();
@@ -380,7 +384,7 @@ class Repository implements IRepository {
 				select_game_stmt = connection.prepareStatement(
 						SQL_SELECT_GAME,
 						ResultSet.TYPE_FORWARD_ONLY,
-					    ResultSet.CONCUR_UPDATABLE);
+						ResultSet.CONCUR_UPDATABLE);
 			} catch (SQLException e) {
 				// TODO error handling
 				e.printStackTrace();
@@ -388,7 +392,7 @@ class Repository implements IRepository {
 		}
 		return select_game_stmt;
 	}
-		
+
 	private static final String SQL_SELECT_PLAYERS =
 			"SELECT * FROM Player WHERE gameID = ?";
 
@@ -410,11 +414,30 @@ class Repository implements IRepository {
 		return select_players_stmt;
 	}
 
+	private static final String SQL_SELECT_CARDS = "SELECT * FROM CardField WHERE gameID = ?";
+
+	private PreparedStatement select_cards_stmt = null;
+
+	private PreparedStatement getSelectPlayersCardsU() {
+		if (select_card_field_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_card_field_stmt = connection.prepareStatement(
+						SQL_SELECT_CARDS,
+						ResultSet.TYPE_FORWARD_ONLY,
+						ResultSet.CONCUR_UPDATABLE);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return select_cards_stmt;
+	}
+
 	private static final String SQL_SELECT_PLAYERS_ASC =
 			"SELECT * FROM Player WHERE gameID = ? ORDER BY playerID ASC";
-	
+
 	private PreparedStatement select_players_asc_stmt = null;
-	
+
 	private PreparedStatement getSelectPlayersASCStatement() {
 		if (select_players_asc_stmt == null) {
 			Connection connection = connector.getConnection();
@@ -429,12 +452,12 @@ class Repository implements IRepository {
 		}
 		return select_players_asc_stmt;
 	}
-	
+
 	private static final String SQL_SELECT_GAMES =
 			"SELECT gameID, name FROM Game";
-	
+
 	private PreparedStatement select_games_stmt = null;
-	
+
 	private PreparedStatement getSelectGameIdsStatement() {
 		if (select_games_stmt == null) {
 			Connection connection = connector.getConnection();
@@ -449,6 +472,74 @@ class Repository implements IRepository {
 		return select_games_stmt;
 	}
 
+	private void loadCardFieldsFromDB(Board game) throws SQLException {
+		PreparedStatement ps = getselectCardFieldStatement();
+		ps.setInt(1, game.getGameId());
+		ResultSet rs = ps.executeQuery();
 
+		while (rs.next()) {
+			int playerID = rs.getInt("playerID");
+			Player player = game.getPlayer(playerID);
+			int type = rs.getInt("type");
+			int pos = rs.getInt("position");
+			CommandCardField field;
+			if (type == FIELD_TYPE_REGISTER) {
+				field = player.getProgramField(pos);
+			} else if (type == FIELD_TYPE_HAND) {
+				field = player.getCardField(pos);
+			} else {
+				field = null;
+			}
+			if (field != null) {
+				field.setVisible(rs.getBoolean("visible"));
+				Object c = rs.getObject("command");
+				if (c != null) {
+					Command card = Command.values()[rs.getInt("command")];
+					field.setCard(new CommandCard(card));
+				}
+			}
+		}
+		rs.close();
+	}
 
+	private static final String SQL_SELECT_CARD_FIELDS =
+			"SELECT * FROM CardField WHERE gameID = ?";
+
+	private PreparedStatement select_card_field_stmt = null;
+
+	private PreparedStatement getselectCardFieldStatement() {
+		if (select_card_field_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_card_field_stmt = connection.prepareStatement(SQL_SELECT_CARD_FIELDS);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return select_card_field_stmt;
+	}
+
+	private void createCardFieldsInDB(Board game) {
+		for (int i = 0; i < game.getPlayersNumber(); i++) {
+			for (int j = 0; j < 8; j++) {
+				Connection connection = connector.getConnection();
+				String query = " insert into CardField (gameID, playerID, type, position, visible, command)"
+						+ " values (?, ?, ?, ?, ?, ?)";
+				try {
+					PreparedStatement preparedStmt = connection.prepareStatement(query);
+					preparedStmt.setInt(1, game.getGameId());
+					preparedStmt.setInt(2, i);
+					preparedStmt.setInt(3, 1);
+					preparedStmt.setInt(4, j);
+					preparedStmt.setBoolean(5, game.getPlayer(i).getCardField(j).isVisible());
+					preparedStmt.setInt(6, game.getPlayer(i).getCardField(j).getCard().command.ordinal());
+
+					// execute the preparedstatement
+					preparedStmt.execute();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

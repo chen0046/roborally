@@ -54,6 +54,9 @@ public class GameController {
      */
 
     public void movePlayerToSpace(@NotNull Space space, @NotNull Player player, @NotNull Heading heading) throws ImpossibleMoveException {
+        if(winnerCheck(space,player)){
+            System.out.println(player.getName() + " tillykke, du har vundet!!!");
+        }
         Player other = space.getPlayer();
         if (wallCheck(space, player, heading)) {
             if (other != null) {
