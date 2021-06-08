@@ -58,7 +58,7 @@ public class GameController {
         if (wallCheck(space, player, heading)) {
             if (other != null) {
                 Space target = board.getNeighbour(space, heading);
-                if (wallCheck(board.getNeighbour(target,heading), other , heading)) {
+                if (!wallCheck(board.getNeighbour(target,heading), other , heading)) {
                     throw new ImpossibleMoveException(player, space, heading);
                 } else if (target != null) {
                     movePlayerToSpace(target, other, heading);

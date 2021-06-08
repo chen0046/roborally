@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.063 s - in dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 s - in dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest
