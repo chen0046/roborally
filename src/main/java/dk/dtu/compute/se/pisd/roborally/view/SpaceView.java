@@ -185,7 +185,7 @@ public class SpaceView extends StackPane implements ViewObserver {
      * Here we create the visual for the checkpoint (currently temporary design)
      */
     public void checkpoint() {
-        int priority = space.getCheckpoint().getPriority();
+        int priority = space.getCheckpoint();
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.MAGENTA);
@@ -194,8 +194,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().add(canvas);
     }
     public void updateCheckpoint() {
-        Checkpoint checkpoint = space.getCheckpoint();
-        if(checkpoint != null) {
+        int checkpoint = space.getCheckpoint();
+        if(checkpoint != -1) {
             checkpoint();
         }
     }

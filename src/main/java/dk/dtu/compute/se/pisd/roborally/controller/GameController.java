@@ -64,16 +64,35 @@ public class GameController {
                     movePlayerToSpace(target, other, heading);
                 }
             }
-            player.setSpace(space);
-            int playerNumber = board.getPlayerNumber(player);
-            Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
-            board.setCurrentPlayer(nextPlayer);
-            board.setCount(board.getCount() + 1);
         } else {
             throw new ImpossibleMoveException(player, space, heading);
         }
+        player.setSpace(space);
+        checkCheckpoints(space,player);
+        nextPlayerTurn(space,player);
+
     }
 
+    public void nextPlayerTurn(@NotNull Space space, Player player) {
+        int playerNumber = board.getPlayerNumber(player);
+        Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
+        board.setCurrentPlayer(nextPlayer);
+        board.setCount(board.getCount() + 1);
+    }
+
+    public void checkCheckpoints(@NotNull Space space, Player player) {
+        int playerCheckpoint = player.checkpointsReached;
+        if (space.getCheckpoint() != -1) {
+            if (space.getCheckpoint() - 1 == playerCheckpoint) {
+                player.setCheckpointsReached(playerCheckpoint + 1);
+                System.out.println(space.getPlayer().getName() + ", du har nu ramt checkpoint " + space.getCheckpoint());
+            } else if (space.getCheckpoint() <= playerCheckpoint) {
+                System.out.println(space.getPlayer().getName() + ", du har allerede været forbi dette checkpoint");
+            } else {
+                System.out.println(space.getPlayer().getName() + ", du er ikke nået til dette checkpoint endnu");
+            }
+        }
+    }
     // XXX: V2
 
     /**
@@ -382,19 +401,7 @@ public class GameController {
         return true;
     }
 
-    /**
-     * This method checks if a player has hit the final checkpoint (so far in our prototype we only have 1 checkpoint), and announces a winner.
-     * @param space The space the current player in.
-     * @param player The player whose turn it currently is (not used yet)
-     * @return Since it's a boolean it should return a true or a false depending on the outcome of the method
-     */
-    public boolean winnerCheck(Space space, Player player) {
-        Checkpoint checkpointField = space.getCheckpoint();
-        if (checkpointField != null) {
-                return true;
-        }
-        return false;
-    }
+
     public void moveOnConveyor() {
         for (int i = 0; i < board.getConveyorBelts().size(); i++) {
             ConveyorBelt conveyorBelt = board.getConveyorBelts().get(i);
