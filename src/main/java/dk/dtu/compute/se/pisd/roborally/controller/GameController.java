@@ -285,20 +285,17 @@ public class GameController {
             if (target != null) {
                 try {
                     movePlayerToSpace(neighbour, player, heading);
-                }
-                catch (ImpossibleMoveException e) {
+                } catch (ImpossibleMoveException e) {
                     System.out.println("Impossible move");
                 }
                 try {
                     movePlayerToSpace(neighboursNeighbour, player, heading);
-                }
-                catch (ImpossibleMoveException e) {
+                } catch (ImpossibleMoveException e) {
                     System.out.println("Impossible move");
                 }
                 try {
                     movePlayerToSpace(target, player, heading);
-                }
-                catch (ImpossibleMoveException e) {
+                } catch (ImpossibleMoveException e) {
                     System.out.println("Impossible move");
                 }
             }
