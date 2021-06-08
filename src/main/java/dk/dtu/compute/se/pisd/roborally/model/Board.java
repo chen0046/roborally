@@ -72,13 +72,15 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-
-        spaces[5][3].setHole(1);
-        spaces[7][7].setCheckpoint(1);
-        spaces[5][6].setCheckpoint(5);
+        //board 1
+        spaces[2][3].setHole(1);
+        spaces[6][3].setCheckpoint(1);
+        spaces[0][7].setCheckpoint(2);
         spaces[4][2].walls.add(Heading.NORTH);
-        spaces[4][2].walls.add(Heading.EAST);
-        conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 6, 5));
+        spaces[4][5].walls.add(Heading.EAST);
+        spaces[6][6].walls.add(Heading.NORTH);
+        spaces[1][6].walls.add(Heading.SOUTH);
+        conveyorBelts.add(new ConveyorBelt(3, Heading.SOUTH, 4, 4));
         this.stepMode = false;
         setConveyor();
     }
