@@ -69,7 +69,6 @@ public class GameController {
         }
         player.setSpace(space);
         nextPlayerTurn(space,player);
-
     }
 
     public void nextPlayerTurn(@NotNull Space space, Player player) {
