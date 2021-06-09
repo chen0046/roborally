@@ -47,6 +47,7 @@ public class Space extends Subject {
     private Player player;
     public List<Heading> walls = new ArrayList<>();
     private int checkpoint;
+    private int start;
     public Heading isConveyor;
     private int hole;
 
@@ -57,6 +58,7 @@ public class Space extends Subject {
         player = null;
         checkpoint = -1;
         hole = -1;
+        start = -1;
     }
 
     public Player getPlayer() {
@@ -102,6 +104,14 @@ public class Space extends Subject {
 
     public void setCheckpoint(int priority) {
         this.checkpoint = priority;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
     }
 
     public int getHole() {

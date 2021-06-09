@@ -32,6 +32,8 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
+import javax.crypto.Cipher;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -79,7 +81,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     private void updatePlayer() {
-
         Player player = space.getPlayer();
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
@@ -87,6 +88,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                     20.0, 0.0 );
             try {
                 arrow.setFill(Color.valueOf(player.getColor()));
+                arrow.setStroke(Color.BLACK);
             } catch (Exception e) {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
@@ -190,12 +192,26 @@ public class SpaceView extends StackPane implements ViewObserver {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.MAGENTA);
         gc.strokeText("CHECKPOINT\n\t" + priority,10,SPACE_HEIGHT-30,SPACE_WIDTH-20);
-
         this.getChildren().add(canvas);
     }
+    public void startField() {
+        Player player = space.getPlayer();
+        Circle start = new Circle(35,Color.valueOf(player.getColor()));
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.BLACK);
+        gc.strokeText("START",22,SPACE_HEIGHT-60,SPACE_WIDTH-20);
+        this.getChildren().add(start);
+        this.getChildren().add(canvas);
+    }
+
     public void updateCheckpoint() {
+        int start = space.getStart();
         int checkpoint = space.getCheckpoint();
-        if(checkpoint != -1) {
+        if(start == 0) {
+            startField();
+        }
+        else if(checkpoint != -1) {
             checkpoint();
         }
     }
@@ -240,6 +256,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         Circle redHole = new Circle(30,Color.DARKRED);
         this.getChildren().add(redHole);
     }
+
 
     public void updateHole() {
         int placeHole = space.getHole();
