@@ -240,6 +240,11 @@ public class SpaceView extends StackPane implements ViewObserver {
         Circle redHole = new Circle(30,Color.DARKRED);
         this.getChildren().add(redHole);
     }
+public void setLabel(){
+
+}
+
+
 
     public void updateHole() {
         int placeHole = space.getHole();

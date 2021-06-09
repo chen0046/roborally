@@ -26,6 +26,10 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
+
 /**
  * ...
  *
@@ -47,6 +51,7 @@ public class RoboRallyMenuBar extends MenuBar {
     private MenuItem stopGame;
 
     private MenuItem exitApp;
+
 
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
@@ -76,7 +81,27 @@ public class RoboRallyMenuBar extends MenuBar {
 
         controlMenu.setOnShowing(e -> update());
         controlMenu.setOnShown(e -> this.updateBounds());
-        update();
+
+
+     JFrame frame = new JFrame();
+     frame.setLayout(new BorderLayout());
+     frame.setSize(200, 200);
+
+     JPanel statusPanel = new JPanel();
+     statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+     frame.add(statusPanel, BorderLayout.SOUTH);
+     statusPanel.setPreferredSize(new Dimension(frame.getWidth(), 16));
+     statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+     JLabel statusLabel = new JLabel ("status");
+     statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+     statusPanel.add(statusLabel);
+
+     frame.setVisible(true);
+
+
+
+
+
     }
 
     public void update() {
