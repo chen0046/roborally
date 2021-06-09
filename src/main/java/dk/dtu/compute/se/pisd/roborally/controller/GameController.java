@@ -58,7 +58,7 @@ public class GameController {
         if (wallCheck(space, player, heading)) {
             if (other != null) {
                 Space target = board.getNeighbour(space, heading);
-                if (wallCheck(board.getNeighbour(target,heading), other , heading)) {
+                if (!wallCheck(board.getNeighbour(target,heading), other , heading)) {
                     throw new ImpossibleMoveException(player, space, heading);
                 } else if (target != null) {
                     movePlayerToSpace(target, other, heading);
@@ -68,9 +68,7 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
         player.setSpace(space);
-        checkCheckpoints(space,player);
         nextPlayerTurn(space,player);
-
     }
 
     public void nextPlayerTurn(@NotNull Space space, Player player) {
@@ -203,6 +201,10 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(0));
                     } else {
+                        for (int i = 0; i < board.getPlayersNumber(); i++) {
+                            Space space = board.getPlayer(i).getSpace();
+                            checkCheckpoints(space, board.getPlayer(i));
+                        }
                         moveOnConveyor();
                         startProgrammingPhase();
                     }

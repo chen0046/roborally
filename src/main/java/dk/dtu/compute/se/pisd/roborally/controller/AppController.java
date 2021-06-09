@@ -21,12 +21,15 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import com.sun.jdi.connect.Connector;
+import com.sun.jdi.connect.Transport;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.view.SpaceView;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -46,8 +49,8 @@ import java.util.*;
 public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
-    final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
-
+    final private List<String> PLAYER_COLORS = Arrays.asList("magenta", "red", "blue", "green", "orange", "grey");
+    final private List<String> START_COLORS = Arrays.asList("magenta", "red", "blue", "green", "orange", "grey");
     final private RoboRally roboRally;
 
     private GameController gameController;
@@ -85,8 +88,8 @@ public class AppController implements Observer {
             // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
             roboRally.createBoardView(gameController);
-            }
         }
+    }
 
     public void saveGame() {
         // XXX needs to be implemented eventually

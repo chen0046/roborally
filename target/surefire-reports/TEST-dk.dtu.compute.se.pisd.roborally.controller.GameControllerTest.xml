@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0.063" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0.062" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="15"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="DK"/>
     <property name="sun.boot.library.path" value="C:\Users\Klaus\.jdks\openjdk-15.0.1\bin"/>
-    <property name="sun.java.command" value="C:\Users\Klaus\AppData\Local\Temp\surefire1963071705732657095\surefirebooter6491362559110751387.jar C:\Users\Klaus\AppData\Local\Temp\surefire1963071705732657095 2021-06-07T13-18-09_991-jvmRun1 surefire12133818067628750254tmp surefire_04864335144832433150tmp"/>
+    <property name="sun.java.command" value="C:\Users\Klaus\AppData\Local\Temp\surefire127393060742757901\surefirebooter5484359157030174569.jar C:\Users\Klaus\AppData\Local\Temp\surefire127393060742757901 2021-06-08T11-34-23_286-jvmRun1 surefire14980531250586366366tmp surefire_010820113412951444934tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Klaus\Desktop\Daus\roborally\target\test-classes;C:\Users\Klaus\Desktop\Daus\roborally\target\classes;C:\Users\Klaus\.m2\repository\org\jetbrains\annotations\13.0\annotations-13.0.jar;C:\Users\Klaus\.m2\repository\mysql\mysql-connector-java\8.0.11\mysql-connector-java-8.0.11.jar;C:\Users\Klaus\.m2\repository\com\google\protobuf\protobuf-java\2.6.0\protobuf-java-2.6.0.jar;C:\Users\Klaus\.m2\repository\com\google\code\gson\gson\2.8.2\gson-2.8.2.jar;C:\Users\Klaus\.m2\repository\com\google\guava\guava\19.0\guava-19.0.jar;C:\Users\Klaus\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.4.2\junit-jupiter-api-5.4.2.jar;C:\Users\Klaus\.m2\repository\org\apiguardian\apiguardian-api\1.0.0\apiguardian-api-1.0.0.jar;C:\Users\Klaus\.m2\repository\org\opentest4j\opentest4j\1.1.1\opentest4j-1.1.1.jar;C:\Users\Klaus\.m2\repository\org\junit\platform\junit-platform-commons\1.4.2\junit-platform-commons-1.4.2.jar;C:\Users\Klaus\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.4.2\junit-jupiter-engine-5.4.2.jar;C:\Users\Klaus\.m2\repository\org\junit\platform\junit-platform-engine\1.4.2\junit-platform-engine-1.4.2.jar;C:\Users\Klaus\.m2\repository\org\openjfx\javafx-controls\15.0.1\javafx-controls-15.0.1.jar;C:\Users\Klaus\.m2\repository\org\openjfx\javafx-controls\15.0.1\javafx-controls-15.0.1-win.jar;C:\Users\Klaus\.m2\repository\org\openjfx\javafx-graphics\15.0.1\javafx-graphics-15.0.1.jar;C:\Users\Klaus\.m2\repository\org\openjfx\javafx-graphics\15.0.1\javafx-graphics-15.0.1-win.jar;C:\Users\Klaus\.m2\repository\org\openjfx\javafx-base\15.0.1\javafx-base-15.0.1.jar;C:\Users\Klaus\.m2\repository\org\openjfx\javafx-base\15.0.1\javafx-base-15.0.1-win.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Klaus\AppData\Local\Temp\surefire1963071705732657095\surefirebooter6491362559110751387.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Klaus\AppData\Local\Temp\surefire127393060742757901\surefirebooter5484359157030174569.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="15.0.1+9-18"/>
@@ -56,9 +56,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="59.0"/>
   </properties>
-  <testcase name="fastFwd" classname="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0.047"/>
+  <testcase name="fastFwd" classname="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0.031"/>
   <testcase name="moveForward" classname="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0"/>
   <testcase name="turnRight" classname="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0"/>
   <testcase name="moveCurrentPlayerToSpace" classname="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0"/>
-  <testcase name="turnLeft" classname="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0"/>
+  <testcase name="turnLeft" classname="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" time="0.016"/>
 </testsuite>

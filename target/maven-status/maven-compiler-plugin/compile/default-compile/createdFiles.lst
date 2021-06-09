@@ -40,7 +40,6 @@ dk\dtu\compute\se\pisd\roborally\model\Player.class
 dk\dtu\compute\se\pisd\roborally\view\BoardView$SpaceEventHandler.class
 dk\dtu\compute\se\pisd\roborally\view\CardFieldView$OnDragOverHandler.class
 dk\dtu\compute\se\pisd\roborally\controller\GameController$1.class
-dk\dtu\compute\se\pisd\roborally\model\Checkpoint.class
 dk\dtu\compute\se\pisd\roborally\view\ViewObserver.class
 dk\dtu\compute\se\pisd\roborally\view\CardFieldView$OnDragExitedHandler.class
 dk\dtu\compute\se\pisd\roborally\model\Heading.class
