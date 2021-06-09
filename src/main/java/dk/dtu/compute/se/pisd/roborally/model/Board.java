@@ -38,31 +38,20 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  *
  */
 public class Board extends Subject {
-
     public final int width;
-
     public final int height;
-
-    public final String boardName;
-
+    public String boardName = null;
     private Integer gameId;
-
     private final Space[][] spaces;
-
     private final List<Player> players = new ArrayList<>();
-
     private Player current;
-
     private Phase phase = INITIALISATION;
-
     private int step = 0;
-
     private boolean stepMode;
 
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
-    public Board(int width, int height, @NotNull String boardName) {
-        this.boardName = boardName;
+    public Board(int width, int height) {
         this.width = width;
         this.height = height;
         spaces = new Space[width][height];
@@ -76,16 +65,7 @@ public class Board extends Subject {
         spaces[1][0].setStart(0);
         spaces[2][0].setStart(0);
         spaces[3][0].setStart(0);*/
-        spaces[7][6].setRotateLeft(1);
-        spaces[3][3].setRotateRight(1);
-        spaces[5][3].setHole(1);
-        spaces[7][7].setCheckpoint(1);
-        spaces[5][6].setCheckpoint(5);
-        spaces[4][4].setCheckpoint(2);
-        spaces[4][5].setCheckpoint(3);
-        spaces[4][2].walls.add(Heading.NORTH);
-        spaces[4][2].walls.add(Heading.EAST);
-        conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 6, 5));
+
         //spilleplade 1
         spaces[2][3].setHole(1);
         spaces[7][5].setHole(1);
@@ -258,7 +238,7 @@ public class Board extends Subject {
 
 
     public String getStatusMessage() {
-        return "Player = " + getCurrentPlayer().getName() + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
+        return "Player = " + getCurrentPlayer().getName() + ", Checkpoints Reached: " + getCurrentPlayer().checkpointsReached + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
                 ", Step: " + getStep();
     }
 
