@@ -69,6 +69,7 @@ public class GameController {
         }
         player.setSpace(space);
         checkCheckpoints(space,player);
+        rotateGear(player,space);
         nextPlayerTurn(space,player);
 
     }
@@ -202,10 +203,10 @@ public class GameController {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(0));
-                    } else {
+                    }  else {
                         moveOnConveyor();
                         startProgrammingPhase();
-                    }
+                        }
                 }
             } else {
                 // this should not happen
@@ -408,5 +409,16 @@ public class GameController {
             Space space = board.getSpace(conveyorBelt.x, conveyorBelt.y);
             conveyorBelt.doAction(this, space);
         }
+
     }
+
+    public void rotateGear(Player player, Space space){
+        Space current = player.getSpace();
+        if(space.getRotate() == 1){
+            turnRight(current.getPlayer());
+        }
+    }
+
+
+
 }

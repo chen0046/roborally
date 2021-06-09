@@ -72,7 +72,7 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-
+        spaces[3][3].setRotate(1);
         spaces[5][3].setHole(1);
         spaces[7][7].setCheckpoint(1);
         spaces[5][6].setCheckpoint(5);

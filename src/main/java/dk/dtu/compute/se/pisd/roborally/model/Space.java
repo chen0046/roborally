@@ -49,6 +49,19 @@ public class Space extends Subject {
     private int checkpoint;
     public Heading isConveyor;
     private int hole;
+    private int rotate;
+
+
+    public int getRotate() {
+        return rotate;
+    }
+
+    public void setRotate(int rotate) {
+        this.rotate = rotate;
+    }
+
+
+
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -57,6 +70,7 @@ public class Space extends Subject {
         player = null;
         checkpoint = -1;
         hole = -1;
+        rotate = -1;
     }
 
     public Player getPlayer() {
