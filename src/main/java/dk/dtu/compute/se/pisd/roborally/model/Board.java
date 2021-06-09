@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
@@ -51,7 +50,8 @@ public class Board extends Subject {
 
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
-    public Board(int width, int height) {
+    public Board(int width, int height, String boardName) {
+        this.boardName = boardName;
         this.width = width;
         this.height = height;
         spaces = new Space[width][height];
@@ -61,11 +61,6 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        /*spaces[0][0].setStart(0);
-        spaces[1][0].setStart(0);
-        spaces[2][0].setStart(0);
-        spaces[3][0].setStart(0);*/
-
         //spilleplade 1
         spaces[2][3].setHole(1);
         spaces[7][5].setHole(1);
@@ -104,6 +99,10 @@ public class Board extends Subject {
         this.height = height1;
         this.boardName = boardName;
         this.spaces = spaces;
+    }
+
+    public Board(int width, int height) {
+        this(width, height, "defaultboard");
     }
 
     public Integer getGameId() {
@@ -238,7 +237,7 @@ public class Board extends Subject {
 
 
     public String getStatusMessage() {
-        return "Player = " + getCurrentPlayer().getName() + ", Checkpoints Reached: " + getCurrentPlayer().checkpointsReached + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
+        return "Player = " + getCurrentPlayer().getName() + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
                 ", Step: " + getStep();
     }
 
