@@ -81,6 +81,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     private void updatePlayer() {
+
         Player player = space.getPlayer();
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
@@ -111,6 +112,8 @@ public class SpaceView extends StackPane implements ViewObserver {
             updateCheckpoint();
             updateConveyor();
             updatePlayer();
+            updateRotateRight();
+            updateRotateLeft();
         }
     }
 
@@ -162,6 +165,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         gc.strokeLine(2, SPACE_HEIGHT-72, 2 , SPACE_HEIGHT-2 );
         this.getChildren().add(canvas);
     }
+
     public void wallNorth() {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -204,7 +208,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().add(start);
         this.getChildren().add(canvas);
     }
-
     public void updateCheckpoint() {
         int start = space.getStart();
         int checkpoint = space.getCheckpoint();
@@ -257,14 +260,44 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().add(redHole);
     }
 
-
     public void updateHole() {
         int placeHole = space.getHole();
         if(placeHole == 1) {
             hole();
         }
     }
-}
 
+    public void rotateLeft() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.BLUE);
+        gc.strokeText("GearLeft\n\t", 10, SPACE_HEIGHT - 30, SPACE_WIDTH - 20);
+
+        this.getChildren().add(canvas);
+    }
+
+    public void rotateRight() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.BLUE);
+        gc.strokeText("GearRight\n\t", 10, SPACE_HEIGHT - 30, SPACE_WIDTH - 20);
+
+        this.getChildren().add(canvas);
+    }
+
+    public void updateRotateLeft() {
+        int placeRotateLeft = space.getRotateLeft();
+        if (placeRotateLeft == 1) {
+            rotateLeft();
+        }
+    }
+
+    public void updateRotateRight() {
+        int placeRotateRight = space.getRotateRight();
+        if (placeRotateRight == 1) {
+            rotateRight();
+        }
+    }
+}
 
 

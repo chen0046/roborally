@@ -38,15 +38,25 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  *
  */
 public class Board extends Subject {
+
     public final int width;
+
     public final int height;
-    public String boardName = null;
+
+    public final String boardName;
+
     private Integer gameId;
+
     private final Space[][] spaces;
+
     private final List<Player> players = new ArrayList<>();
+
     private Player current;
+
     private Phase phase = INITIALISATION;
+
     private int step = 0;
+
     private boolean stepMode;
 
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
@@ -66,6 +76,8 @@ public class Board extends Subject {
         spaces[1][0].setStart(0);
         spaces[2][0].setStart(0);
         spaces[3][0].setStart(0);*/
+        spaces[7][6].setRotateLeft(1);
+        spaces[3][3].setRotateRight(1);
         spaces[5][3].setHole(1);
         spaces[7][7].setCheckpoint(1);
         spaces[5][6].setCheckpoint(5);

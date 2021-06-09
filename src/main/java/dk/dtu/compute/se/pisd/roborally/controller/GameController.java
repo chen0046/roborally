@@ -68,7 +68,11 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
         player.setSpace(space);
-        nextPlayerTurn(space,player);
+
+        rotateGearLeft(player, space);
+        rotateGearRight(player, space);
+        nextPlayerTurn(space, player);
+
     }
 
     public void nextPlayerTurn(@NotNull Space space, Player player) {
@@ -409,6 +413,21 @@ public class GameController {
             ConveyorBelt conveyorBelt = board.getConveyorBelts().get(i);
             Space space = board.getSpace(conveyorBelt.x, conveyorBelt.y);
             conveyorBelt.doAction(this, space);
+        }
+    }
+
+    public void rotateGearLeft(Player player, Space space) {
+        Space current = player.getSpace();
+        if (space.getRotateLeft() == 1) {
+            turnRight(current.getPlayer());
+        }
+    }
+
+    public void rotateGearRight(Player player, Space space) {
+        Space current = player.getSpace();
+        if (space.getRotateRight() == 1) {
+            turnLeft(current.getPlayer());
+
         }
     }
 }
