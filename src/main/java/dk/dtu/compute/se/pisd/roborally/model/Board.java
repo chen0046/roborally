@@ -50,7 +50,7 @@ public class Board extends Subject {
 
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
-    public Board(int width, int height) {
+    public Board(int width, int height, String boardName) {
         this.boardName = boardName;
         this.width = width;
         this.height = height;
@@ -99,6 +99,10 @@ public class Board extends Subject {
         this.height = height1;
         this.boardName = boardName;
         this.spaces = spaces;
+    }
+
+    public Board(int width, int height) {
+        this(width, height, "defaultboard");
     }
 
     public Integer getGameId() {
