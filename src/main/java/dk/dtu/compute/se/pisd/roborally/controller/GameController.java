@@ -31,13 +31,12 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- * @coauthor Andreas Vilstrup, s205450@student.dtu.dk
  * @coauthor Oliver lyngholm Fiedler, s205423@student.dtu.dk
+ * @coauthor Andreas Vilstrup, s205450@student.dtu.dk
  * @coauthor Isabel Jacobsen
- * @coauthor Ahmad shereef
  * @coauthor Alexander Solomon
  * @coauthor Chenxi Cai
- *
+ * @coauthor Ahmad shereef
  */
 public class GameController {
 
