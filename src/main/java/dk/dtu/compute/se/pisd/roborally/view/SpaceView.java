@@ -111,9 +111,9 @@ public class SpaceView extends StackPane implements ViewObserver {
             updateWall();
             updateCheckpoint();
             updateConveyor();
-            updatePlayer();
             updateRotateRight();
             updateRotateLeft();
+            updatePlayer();
         }
     }
 
@@ -271,7 +271,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.BLUE);
-        gc.strokeText("GearLeft\n\t", 10, SPACE_HEIGHT - 30, SPACE_WIDTH - 20);
+        gc.strokeText("GearLeft\n\t", 10, SPACE_HEIGHT - 10, SPACE_WIDTH - 20);
 
         this.getChildren().add(canvas);
     }
@@ -280,7 +280,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.BLUE);
-        gc.strokeText("GearRight\n\t", 10, SPACE_HEIGHT - 30, SPACE_WIDTH - 20);
+        gc.strokeText("GearRight\n\t", 10, SPACE_HEIGHT - 10, SPACE_WIDTH - 20);
 
         this.getChildren().add(canvas);
     }

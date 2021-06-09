@@ -68,9 +68,6 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
         player.setSpace(space);
-
-        rotateGearLeft(player, space);
-        rotateGearRight(player, space);
         nextPlayerTurn(space, player);
 
     }
@@ -183,6 +180,7 @@ public class GameController {
     // XXX: V2
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
+        Space current = currentPlayer.getSpace();
         if (board.getPhase() == ACTIVATION && currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
@@ -204,11 +202,18 @@ public class GameController {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(0));
-                    } else {
+                    }  else {
                         for (int i = 0; i < board.getPlayersNumber(); i++) {
                             Space space = board.getPlayer(i).getSpace();
                             checkCheckpoints(space, board.getPlayer(i));
+
                         }
+                            for (int i =0; i < board.getPlayersNumber(); i++){
+                                Space space = board.getPlayer(i).getSpace();
+                                rotateGearLeft(board.getPlayer(i), space);
+                                rotateGearRight(board.getPlayer(i), space);
+                        }
+
                         moveOnConveyor();
                         startProgrammingPhase();
                     }
@@ -419,14 +424,14 @@ public class GameController {
     public void rotateGearLeft(Player player, Space space) {
         Space current = player.getSpace();
         if (space.getRotateLeft() == 1) {
-            turnRight(current.getPlayer());
+            turnLeft(current.getPlayer());
         }
     }
 
     public void rotateGearRight(Player player, Space space) {
         Space current = player.getSpace();
         if (space.getRotateRight() == 1) {
-            turnLeft(current.getPlayer());
+            turnRight(current.getPlayer());
 
         }
     }
