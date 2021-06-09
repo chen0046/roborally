@@ -38,12 +38,9 @@ import java.util.List;
  * Spaces now have list of walls, so each space can have several walls.
  */
 public class Space extends Subject {
-
     public final Board board;
-
     public final int x;
     public final int y;
-
     private Player player;
     public List<Heading> walls = new ArrayList<>();
     private int checkpoint;

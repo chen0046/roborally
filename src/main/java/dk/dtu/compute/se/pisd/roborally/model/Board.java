@@ -38,25 +38,15 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  *
  */
 public class Board extends Subject {
-
     public final int width;
-
     public final int height;
-
-    public final String boardName;
-
+    public String boardName = null;
     private Integer gameId;
-
     private final Space[][] spaces;
-
     private final List<Player> players = new ArrayList<>();
-
     private Player current;
-
     private Phase phase = INITIALISATION;
-
     private int step = 0;
-
     private boolean stepMode;
 
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
@@ -84,12 +74,44 @@ public class Board extends Subject {
         spaces[4][2].walls.add(Heading.NORTH);
         spaces[4][2].walls.add(Heading.EAST);
         conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 6, 5));
+        //spilleplade 1
+        spaces[2][3].setHole(1);
+        spaces[7][5].setHole(1);
+        spaces[5][6].setHole(1);
+
+        spaces[6][2].setCheckpoint(1);
+        spaces[0][7].setCheckpoint(2);
+        spaces[6][6].setCheckpoint(3);
+        spaces[7][0].setCheckpoint(4);
+
+        spaces[6][1].walls.add(Heading.WEST);
+        spaces[3][2].walls.add(Heading.SOUTH);
+        spaces[7][3].walls.add(Heading.SOUTH);
+        spaces[0][6].walls.add(Heading.SOUTH);
+        spaces[6][7].walls.add(Heading.NORTH);
+        spaces[6][0].walls.add(Heading.WEST);
+
+        conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 4, 2));
+        conveyorBelts.add(new ConveyorBelt(2, Heading.EAST, 2, 6));
+        conveyorBelts.add(new ConveyorBelt(3, Heading.WEST, 3, 7));
         this.stepMode = false;
         setConveyor();
+
+        //spilleplade 2
+        //spaces[1][1].setHole(2);
+        //spaces[2][2].setCheckpoint(1);
+        //spaces[3][3].walls.add(Heading.WEST);
+        //conveyorBelts.add(new ConveyorBelt(3,Heading.SOUTH,1,1));
+        //setConveyor();
+
     }
 
-    public Board(int width, int height) {
-        this(width, height, "defaultboard");
+    public Board(int width, int height, int width1, int height1, String boardName, Space[][] spaces) {
+
+        this.width = width1;
+        this.height = height1;
+        this.boardName = boardName;
+        this.spaces = spaces;
     }
 
     public Integer getGameId() {
