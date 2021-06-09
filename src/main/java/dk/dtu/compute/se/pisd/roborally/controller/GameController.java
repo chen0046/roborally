@@ -42,6 +42,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
 public class GameController {
 
     final public Board board;
+
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -58,7 +59,7 @@ public class GameController {
         if (wallCheck(space, player, heading)) {
             if (other != null) {
                 Space target = board.getNeighbour(space, heading);
-                if (!wallCheck(board.getNeighbour(target,heading), other , heading)) {
+                if (!wallCheck(board.getNeighbour(target, heading), other, heading)) {
                     throw new ImpossibleMoveException(player, space, heading);
                 } else if (target != null) {
                     movePlayerToSpace(target, other, heading);
@@ -68,9 +69,10 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
         player.setSpace(space);
-        checkCheckpoints(space,player);
-        rotateGear(player,space);
-        nextPlayerTurn(space,player);
+
+        rotateGearLeft(player, space);
+        rotateGearRight(player, space);
+        nextPlayerTurn(space, player);
 
     }
 
@@ -181,8 +183,10 @@ public class GameController {
 
     // XXX: V2
     private void executeNextStep() {
-        Player currentPlayer = board.getCurrentPlayer();
-        if (board.getPhase() == ACTIVATION && currentPlayer != null) {
+                        Player currentPlayer = board.getCurrentPlayer();
+                        Space space = currentPlayer.getSpace();
+
+       if (board.getPhase() == ACTIVATION && currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
@@ -203,10 +207,10 @@ public class GameController {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(0));
-                    }  else {
+                    } else {
                         moveOnConveyor();
                         startProgrammingPhase();
-                        }
+                    }
                 }
             } else {
                 // this should not happen
@@ -287,21 +291,23 @@ public class GameController {
             }
         }
     }
+
     public void fasterForward(@NotNull Player player) {
         if (player.board == board) {
             Heading heading = player.getHeading();
-                for (int i = 0; i < 3; i++) {
-                    Space current = player.getSpace();
-                    Space neighbor = board.getNeighbour(current, heading);
-                    try {
-                        movePlayerToSpace(neighbor, player, heading);
-                    } catch (ImpossibleMoveException e) {
-                        System.out.println("Impossible move");
-                        break;
-                    }
+            for (int i = 0; i < 3; i++) {
+                Space current = player.getSpace();
+                Space neighbor = board.getNeighbour(current, heading);
+                try {
+                    movePlayerToSpace(neighbor, player, heading);
+                } catch (ImpossibleMoveException e) {
+                    System.out.println("Impossible move");
+                    break;
                 }
+            }
         }
     }
+
     public void moveBack(@NotNull Player player) {
         Heading heading = player.getHeading().next().next();
         Space space = player.getSpace();
@@ -314,6 +320,7 @@ public class GameController {
             }
         }
     }
+
     public void turnRight(@NotNull Player player) {
         Space current = player.getSpace();
         if (current != null && player.board == current.board) {
@@ -327,6 +334,7 @@ public class GameController {
             player.setHeading(player.getHeading().prev());
         }
     }
+
     public void uTurn(@NotNull Player player) {
         Space current = player.getSpace();
         if (current != null && player.board == current.board) {
@@ -352,8 +360,7 @@ public class GameController {
     public void turnLeftOrRight(@NotNull Player player, Boolean choice) {
         if (choice) {
             executeCommandAndContinue(Command.LEFT, player);
-        }
-        else {
+        } else {
             executeCommandAndContinue(Command.RIGHT, player);
         }
     }
@@ -382,8 +389,9 @@ public class GameController {
 
     /**
      * This method checks if a field has a wall and if the wall is going to collide based on the heading of the wall.
-     * @param space The space to which the current player is and the space to which the wall is.
-     * @param player The player whose turn it currently is
+     *
+     * @param space   The space to which the current player is and the space to which the wall is.
+     * @param player  The player whose turn it currently is
      * @param heading The heading of the player
      * @return Since it's a boolean it should return a true or a false depending on the outcome of the method
      */
@@ -412,13 +420,18 @@ public class GameController {
 
     }
 
-    public void rotateGear(Player player, Space space){
+    public void rotateGearLeft(Player player, Space space) {
         Space current = player.getSpace();
-        if(space.getRotate() == 1){
+        if (space.getRotateLeft() == 1) {
             turnRight(current.getPlayer());
         }
     }
 
+    public void rotateGearRight(Player player, Space space) {
+        Space current = player.getSpace();
+        if (space.getRotateRight() == 1) {
+            turnLeft(current.getPlayer());
 
-
+        }
+    }
 }

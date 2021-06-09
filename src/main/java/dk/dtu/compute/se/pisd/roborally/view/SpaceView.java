@@ -84,21 +84,20 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
-                    20.0, 0.0 );
+                    20.0, 0.0);
             try {
                 arrow.setFill(Color.valueOf(player.getColor()));
             } catch (Exception e) {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
 
-            arrow.setRotate((90*player.getHeading().ordinal())%360);
+            arrow.setRotate((90 * player.getHeading().ordinal()) % 360);
             this.getChildren().add(arrow);
         }
     }
 
     /**
      * Here we added the new methods we created for the wall and the checkpoint
-     *
      */
     @Override
     public void updateView(Subject subject) {
@@ -109,7 +108,8 @@ public class SpaceView extends StackPane implements ViewObserver {
             updateCheckpoint();
             updateConveyor();
             updatePlayer();
-            updateRotate();
+            updateRotateRight();
+            updateRotateLeft();
         }
     }
 
@@ -147,7 +147,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         gc.setLineWidth(5);
         gc.setLineCap(StrokeLineCap.ROUND);
 
-        gc.strokeLine(2,SPACE_HEIGHT-2,SPACE_WIDTH-2,SPACE_HEIGHT-2);
+        gc.strokeLine(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
         this.getChildren().add(canvas);
     }
 
@@ -158,9 +158,10 @@ public class SpaceView extends StackPane implements ViewObserver {
         gc.setLineWidth(5);
         gc.setLineCap(StrokeLineCap.ROUND);
 
-        gc.strokeLine(2, SPACE_HEIGHT-72, 2 , SPACE_HEIGHT-2 );
+        gc.strokeLine(2, SPACE_HEIGHT - 72, 2, SPACE_HEIGHT - 2);
         this.getChildren().add(canvas);
     }
+
     public void wallNorth() {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -168,9 +169,10 @@ public class SpaceView extends StackPane implements ViewObserver {
         gc.setLineWidth(5);
         gc.setLineCap(StrokeLineCap.ROUND);
 
-        gc.strokeLine(2, SPACE_HEIGHT-73, SPACE_WIDTH-2 , SPACE_HEIGHT-73 );
+        gc.strokeLine(2, SPACE_HEIGHT - 73, SPACE_WIDTH - 2, SPACE_HEIGHT - 73);
         this.getChildren().add(canvas);
     }
+
     public void wallEast() {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -178,7 +180,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         gc.setLineWidth(5);
         gc.setLineCap(StrokeLineCap.ROUND);
 
-        gc.strokeLine(SPACE_WIDTH-2, SPACE_HEIGHT-2, SPACE_WIDTH-2 , SPACE_HEIGHT-73 );
+        gc.strokeLine(SPACE_WIDTH - 2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 73);
         this.getChildren().add(canvas);
     }
 
@@ -190,39 +192,45 @@ public class SpaceView extends StackPane implements ViewObserver {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.MAGENTA);
-        gc.strokeText("CHECKPOINT\n\t" + priority,10,SPACE_HEIGHT-30,SPACE_WIDTH-20);
+        gc.strokeText("CHECKPOINT\n\t" + priority, 10, SPACE_HEIGHT - 30, SPACE_WIDTH - 20);
 
         this.getChildren().add(canvas);
     }
+
     public void updateCheckpoint() {
         int checkpoint = space.getCheckpoint();
-        if(checkpoint != -1) {
+        if (checkpoint != -1) {
             checkpoint();
         }
     }
+
     public void conveyorSouth() {
-        Polygon moveSouth = new Polygon(10,35,25,60,40,35);
+        Polygon moveSouth = new Polygon(10, 35, 25, 60, 40, 35);
         moveSouth.setStroke(Color.VIOLET);
         this.getChildren().add(moveSouth);
     }
+
     public void conveyorNorth() {
-        Polygon moveNorth = new Polygon(10,35,25,60,40,35);
+        Polygon moveNorth = new Polygon(10, 35, 25, 60, 40, 35);
         moveNorth.setStroke(Color.VIOLET);
         moveNorth.setRotate(180);
         this.getChildren().add(moveNorth);
     }
+
     public void conveyorEast() {
-        Polygon moveEast = new Polygon(10,35,25,60,40,35);
+        Polygon moveEast = new Polygon(10, 35, 25, 60, 40, 35);
         moveEast.setStroke(Color.VIOLET);
         moveEast.setRotate(270);
         this.getChildren().add(moveEast);
     }
+
     public void conveyorWest() {
-        Polygon moveWest = new Polygon(10,35,25,60,40,35);
+        Polygon moveWest = new Polygon(10, 35, 25, 60, 40, 35);
         moveWest.setStroke(Color.VIOLET);
         moveWest.setRotate(90);
         this.getChildren().add(moveWest);
     }
+
     public void updateConveyor() {
         if (space.isConveyor == Heading.NORTH) {
             conveyorNorth();
@@ -237,32 +245,50 @@ public class SpaceView extends StackPane implements ViewObserver {
             conveyorSouth();
         }
     }
+
     public void hole() {
-        Circle redHole = new Circle(30,Color.DARKRED);
+        Circle redHole = new Circle(30, Color.DARKRED);
         this.getChildren().add(redHole);
     }
 
     public void updateHole() {
         int placeHole = space.getHole();
-        if(placeHole == 1) {
+        if (placeHole == 1) {
             hole();
         }
     }
-    public void rotate() {
+
+    public void rotateLeft() {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.BLUE);
-        gc.strokeText("GearLeft\n\t",10,SPACE_HEIGHT-30,SPACE_WIDTH-20);
+        gc.strokeText("GearLeft\n\t", 10, SPACE_HEIGHT - 30, SPACE_WIDTH - 20);
 
         this.getChildren().add(canvas);
     }
-    public void updateRotate(){
-        int placeRotate = space.getRotate();
-        if(placeRotate == 1) {
-            rotate();
+
+    public void rotateRight() {
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.BLUE);
+        gc.strokeText("GearRight\n\t", 10, SPACE_HEIGHT - 30, SPACE_WIDTH - 20);
+
+        this.getChildren().add(canvas);
+    }
+
+    public void updateRotateLeft() {
+        int placeRotateLeft = space.getRotateLeft();
+        if (placeRotateLeft == 1) {
+            rotateLeft();
+        }
+    }
+
+    public void updateRotateRight() {
+        int placeRotateRight = space.getRotateRight();
+        if (placeRotateRight == 1) {
+            rotateRight();
         }
     }
 }
-
 
 
