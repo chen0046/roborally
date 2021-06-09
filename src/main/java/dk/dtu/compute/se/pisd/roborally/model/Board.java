@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
@@ -38,30 +37,20 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  *
  */
 public class Board extends Subject {
-
     public final int width;
-
     public final int height;
-
-    public final String boardName;
-
+    public String boardName = null;
     private Integer gameId;
-
     private final Space[][] spaces;
-
     private final List<Player> players = new ArrayList<>();
-
     private Player current;
-
     private Phase phase = INITIALISATION;
-
     private int step = 0;
-
     private boolean stepMode;
 
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
-    public Board(int width, int height, @NotNull String boardName) {
+    public Board(int width, int height) {
         this.boardName = boardName;
         this.width = width;
         this.height = height;
@@ -72,7 +61,7 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        //board 1
+        //spilleplade 1
         spaces[2][3].setHole(1);
         spaces[7][5].setHole(1);
         spaces[5][6].setHole(1);
@@ -82,7 +71,7 @@ public class Board extends Subject {
         spaces[6][6].setCheckpoint(3);
         spaces[7][0].setCheckpoint(4);
 
-        spaces[5][1].walls.add(Heading.EAST);
+        spaces[6][1].walls.add(Heading.WEST);
         spaces[3][2].walls.add(Heading.SOUTH);
         spaces[7][3].walls.add(Heading.SOUTH);
         spaces[0][6].walls.add(Heading.SOUTH);
@@ -94,10 +83,22 @@ public class Board extends Subject {
         conveyorBelts.add(new ConveyorBelt(3, Heading.WEST, 3, 7));
         this.stepMode = false;
         setConveyor();
+
+        //spilleplade 2
+        //spaces[1][1].setHole(2);
+        //spaces[2][2].setCheckpoint(1);
+        //spaces[3][3].walls.add(Heading.WEST);
+        //conveyorBelts.add(new ConveyorBelt(3,Heading.SOUTH,1,1));
+        //setConveyor();
+
     }
 
-    public Board(int width, int height) {
-        this(width, height, "defaultboard");
+    public Board(int width, int height, int width1, int height1, String boardName, Space[][] spaces) {
+
+        this.width = width1;
+        this.height = height1;
+        this.boardName = boardName;
+        this.spaces = spaces;
     }
 
     public Integer getGameId() {
