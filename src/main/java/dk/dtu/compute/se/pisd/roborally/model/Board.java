@@ -295,6 +295,9 @@ public class Board extends Subject {
         this.boardID = boardID;
         if (boardID == 1) {
             numberOfChecks = 4;
+
         }
+
     }
+
 }
