@@ -75,7 +75,7 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
         player.setSpace(space);
-        nextPlayerTurn(space, player);
+        nextPlayerTurn(player);
 
     }
 
@@ -94,9 +94,11 @@ public class GameController {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
             Space currentSpace = player.getSpace();
-            if (currentSpace.getHole() == 1) {
-                holePlayer.add(player);
-                currentSpace.setPlayer(null);
+            if (currentSpace != null) {
+                if (currentSpace.getHole() == 1) {
+                    holePlayer.add(player);
+                    currentSpace.setPlayer(null);
+                }
             }
         }
     }
@@ -251,8 +253,11 @@ public class GameController {
                         board.setCurrentPlayer(board.getPlayer(0));
                     }  else {
                         for (int i = 0; i < board.getPlayersNumber(); i++) {
-                            Space space = board.getPlayer(i).getSpace();
-                            checkCheckpoints(space, board.getPlayer(i));
+                            if (board.getPlayer(i).getSpace() != null) {
+                                Space space = board.getPlayer(i).getSpace();
+                                checkCheckpoints(space, board.getPlayer(i));
+                            }
+
 
                         }
                             for (int i =0; i < board.getPlayersNumber(); i++){
@@ -263,11 +268,7 @@ public class GameController {
                         for (int i = 0; i < board.getPlayersNumber(); i++) {
                             winCheck(board.getPlayer(i));
                         }
-                        for (int i = 0; i < board.getPlayersNumber(); i++) {
-                            holeCheck();
-
-                        }
-
+                        holeCheck();
                         moveOnConveyor();
                         startProgrammingPhase();
                     }
@@ -477,16 +478,19 @@ public class GameController {
 
     public void rotateGearLeft(Player player, Space space) {
         Space current = player.getSpace();
-        if (space.getRotateLeft() == 1) {
-            turnLeft(current.getPlayer());
+        if (current != null) {
+            if (space.getRotateLeft() == 1) {
+                turnLeft(current.getPlayer());
+            }
         }
     }
 
     public void rotateGearRight(Player player, Space space) {
         Space current = player.getSpace();
-        if (space.getRotateRight() == 1) {
-            turnRight(current.getPlayer());
-
+        if (current != null) {
+            if (space.getRotateLeft() == 1) {
+                turnRight(current.getPlayer());
+            }
         }
     }
 }
