@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 
 import java.awt.*;
@@ -52,11 +53,6 @@ public class Space extends Subject {
     private int hole;
     private int rotateRight;
     private int rotateLeft;
-
-
-
-
-
 
 
     public Space(Board board, int x, int y) {

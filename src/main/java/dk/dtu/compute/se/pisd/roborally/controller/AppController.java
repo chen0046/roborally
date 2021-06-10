@@ -30,6 +30,7 @@ import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 import dk.dtu.compute.se.pisd.roborally.view.SpaceView;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -52,7 +53,6 @@ public class AppController implements Observer {
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<Integer> BOARD_NUMBER_OPTIONS = Arrays.asList(1,2);
     final private List<String> PLAYER_COLORS = Arrays.asList("magenta", "red", "blue", "green", "orange", "grey");
-    final private List<String> START_COLORS = Arrays.asList("magenta", "red", "blue", "green", "orange", "grey");
     final private RoboRally roboRally;
 
     private GameController gameController;
@@ -103,6 +103,8 @@ public class AppController implements Observer {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                 board.addPlayer(player);
                 player.setSpace(board.getSpace(i % board.width, 0));
+                Space space = board.getSpace(i % board.width, 0);
+                space.setStart(0);
             }
             
 
@@ -137,6 +139,8 @@ public class AppController implements Observer {
      *
      * @return true if the current game was stopped, false otherwise
      */
+
+
     public boolean stopGame() {
         if (gameController != null) {
             gameController = null;

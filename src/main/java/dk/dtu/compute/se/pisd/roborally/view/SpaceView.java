@@ -34,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.Cipher;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,7 +49,6 @@ import java.util.List;
  * @coauthor Chenxi Cai
  */
 public class SpaceView extends StackPane implements ViewObserver {
-
     final public static int SPACE_HEIGHT = 75; // 60; // 75;
     final public static int SPACE_WIDTH = 75;  // 60; // 75;
 
@@ -200,11 +200,11 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
     public void startField() {
         Player player = space.getPlayer();
-        Circle start = new Circle(35,Color.valueOf(player.getColor()));
+        Circle start = new Circle(35,Color.GREENYELLOW);
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.BLACK);
-        gc.strokeText("START",22,SPACE_HEIGHT-60,SPACE_WIDTH-20);
+        gc.strokeText(" START",20,SPACE_HEIGHT-60,SPACE_WIDTH-20);
         this.getChildren().add(start);
         this.getChildren().add(canvas);
     }
