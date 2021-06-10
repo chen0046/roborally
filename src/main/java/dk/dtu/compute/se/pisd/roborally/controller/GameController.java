@@ -87,7 +87,13 @@ public class GameController {
                     Space start = board.getSpace(currentPlayer.getPlayerID(), 0);
                     currentPlayer.setSpace(start);
                 } else {
-                    currentPlayer.setSpace(currentPlayer.getLastCheckpoint());
+                    Space lastCheckpoint = currentPlayer.getLastCheckpoint();
+                    try {
+                        movePlayerToSpace(lastCheckpoint, currentPlayer, Heading.SOUTH);
+                    }
+                    catch (ImpossibleMoveException e) {
+                        e.printStackTrace();
+                    }
                 }
                 holePlayer.remove(0);
             }
@@ -459,9 +465,11 @@ public class GameController {
      */
     public boolean wallCheck(Space space, Player player, Heading heading) {
         Space firstSpace = player.getSpace();
-        for (int i = 0; i < firstSpace.walls.size(); i++) {
-            if (firstSpace.walls.get(i) == heading) {
-                return false;
+        if (firstSpace != null) {
+            for (int i = 0; i < firstSpace.walls.size(); i++) {
+                if (firstSpace.walls.get(i) == heading) {
+                    return false;
+                }
             }
         }
         for (int i = 0; i < space.walls.size(); i++) {
