@@ -111,6 +111,7 @@ public class Board extends Subject {
 
             spaces[5][2].setRotateLeft(1);
             spaces[2][9].setRotateRight(1);
+            spaces[8][8].setRotateRight(1);
 
             spaces[7][7].setCheckpoint(1);
             spaces[9][2].setCheckpoint(2);
@@ -118,9 +119,7 @@ public class Board extends Subject {
             spaces[1][9].setCheckpoint(4);
             spaces[5][4].setCheckpoint(5);
 
-            spaces[3][3].walls.add(Heading.WEST);
-
-            conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 1, 1));
+            conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 7, 1));
             conveyorBelts.add(new ConveyorBelt(2, Heading.EAST, 8, 0));
             conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 4, 7));
             conveyorBelts.add(new ConveyorBelt(3, Heading.EAST, 7, 9));
