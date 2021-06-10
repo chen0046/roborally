@@ -80,25 +80,25 @@ public class GameController {
     }
 
     public void holeCheck() {
+        if (holePlayer.size() > 0) {
+            while (holePlayer.size() < 0) {
+                Player currentPlayer = holePlayer.get(0);
+                if (currentPlayer.checkpointsReached == 0) {
+                    Space start = board.getSpace(currentPlayer.getPlayerID(), 0);
+                    start.setPlayer(currentPlayer);
+                } else {
+                    currentPlayer.setSpace(currentPlayer.getLastCheckpoint());
+                }
+            }
+        }
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
             Space currentSpace = player.getSpace();
             if (currentSpace.getHole() == 1) {
                 holePlayer.add(player);
+                currentSpace.setPlayer(null);
             }
         }
-        for (int i = 0; i < holePlayer.size(); i++) {
-            Player currentPlayer = holePlayer.get(i);
-            if (currentPlayer.checkpointsReached <= 0){
-                currentPlayer.setSpace(board.getSpace(currentPlayer.getPlayerID(),0));
-                holePlayer.clear();
-            }
-            else {
-                currentPlayer.setSpace(currentPlayer.getLastCheckpoint());
-                holePlayer.clear();
-            }
-        }
-
     }
 
     public void winCheck(Player player) {
