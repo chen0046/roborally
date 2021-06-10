@@ -29,6 +29,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
@@ -47,6 +48,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
 public class GameController {
 
     final public Board board;
+    public ArrayList<Player> holePlayer = new ArrayList();
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -77,13 +79,27 @@ public class GameController {
 
     }
 
+    public void holeCheck() {
+        for (int i = 0; i < holePlayer.size(); i++) {
+            Player currentPlayer = holePlayer.get(i);
+            String playername = currentPlayer.getName();
+            i--;
+        }
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            Player player = board.getPlayer(i);
+            Space currentSpace = player.getSpace();
+            if (currentSpace.getHole() == 1) {
+                holePlayer.add(player);
+            }
+        }
+    }
+
     public void winCheck(Player player) {
         if (player.checkpointsReached == board.numberOfChecks) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("TILLYKKE!!!");
             alert.setContentText(player.getName() + " tillykke, du har vundet!\nTryk YES for at starte nyt spil\nTryk CLOSE for at afslutte programmet");
             Optional<ButtonType> resultChoice = alert.showAndWait();
-
             if (!resultChoice.isPresent() || resultChoice.get() == ButtonType.CLOSE) {
                 Platform.exit();
             }
