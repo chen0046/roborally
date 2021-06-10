@@ -98,13 +98,13 @@ public class GameController {
         if (player.checkpointsReached == board.numberOfChecks) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("TILLYKKE!!!");
-            alert.setContentText(player.getName() + " tillykke, du har vundet!\nTryk YES for at starte nyt spil\nTryk CLOSE for at afslutte programmet");
+            alert.setContentText(player.getName() + " tillykke, du har vundet!\nTryk OK for at afslutte programmet\nTryk Cancel og dernæst på stop game og new game i højre\n hjørne for at starte nyt spil");
             Optional<ButtonType> resultChoice = alert.showAndWait();
-            if (!resultChoice.isPresent() || resultChoice.get() == ButtonType.CLOSE) {
-                Platform.exit();
-            }
-            else if (resultChoice.get() == ButtonType.YES) {
+            if (!resultChoice.isPresent() || resultChoice.get() == ButtonType.CANCEL) {
                 return;
+            }
+            else if (resultChoice.get() == ButtonType.OK) {
+                Platform.exit();
             }
         }
     }
