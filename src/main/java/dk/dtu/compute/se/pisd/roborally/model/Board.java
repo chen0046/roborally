@@ -56,6 +56,8 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
+    public String boardName;
+
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
     public Board(int width, int height, String boardName) {
