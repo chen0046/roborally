@@ -304,10 +304,11 @@ public class Board extends Subject {
     public void setBoardID(int boardID) {
         this.boardID = boardID;
         if (boardID == 1) {
-            numberOfChecks = 4;
-
+            numberOfChecks = 5;
         }
-
+        else if (boardID == 2) {
+            numberOfChecks = 4;
+        }
     }
 
 }
