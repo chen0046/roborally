@@ -21,9 +21,15 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.exceptions.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
 
@@ -54,7 +60,6 @@ public class GameController {
 
     public void movePlayerToSpace(@NotNull Space space, @NotNull Player player, @NotNull Heading heading) throws ImpossibleMoveException {
         Player other = space.getPlayer();
-        winMessage(player);
         if (wallCheck(space, player, heading)) {
             if (other != null) {
                 Space target = board.getNeighbour(space, heading);
@@ -72,13 +77,21 @@ public class GameController {
 
     }
 
-    public String winMessage(Player player) {
+    public void winCheck(Player player) {
         if (player.checkpointsReached == 4) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("TILLYKKE!!!");
+            alert.setContentText(player.getName() + " tillykke, du har vundet!\nTryk YES for at starte nyt spil\nTryk CLOSE for at afslutte programmet");
+            Optional<ButtonType> resultChoice = alert.showAndWait();
 
+            if (!resultChoice.isPresent() || resultChoice.get() == ButtonType.CLOSE) {
+                Platform.exit();
+            }
+            else if (resultChoice.get() == ButtonType.YES) {
+                return;
+            }
         }
-        return null;
     }
-
 
     public void nextPlayerTurn(@NotNull Space space, Player player) {
         int playerNumber = board.getPlayerNumber(player);
@@ -219,6 +232,9 @@ public class GameController {
                                 Space space = board.getPlayer(i).getSpace();
                                 rotateGearLeft(board.getPlayer(i), space);
                                 rotateGearRight(board.getPlayer(i), space);
+                        }
+                        for (int i = 0; i < board.getPlayersNumber(); i++) {
+                            winCheck(board.getPlayer(i));
                         }
 
                         moveOnConveyor();
