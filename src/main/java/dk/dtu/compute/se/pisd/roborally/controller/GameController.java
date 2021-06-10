@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.exceptions.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.scene.control.Label;
 import org.jetbrains.annotations.NotNull;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
@@ -54,6 +55,7 @@ public class GameController {
 
     public void movePlayerToSpace(@NotNull Space space, @NotNull Player player, @NotNull Heading heading) throws ImpossibleMoveException {
         Player other = space.getPlayer();
+        winMessage(player);
         if (wallCheck(space, player, heading)) {
             if (other != null) {
                 Space target = board.getNeighbour(space, heading);
@@ -70,6 +72,14 @@ public class GameController {
         nextPlayerTurn(space, player);
 
     }
+
+    public String winMessage(Player player) {
+        if (player.checkpointsReached == 4) {
+
+        }
+        return null;
+    }
+
 
     public void nextPlayerTurn(@NotNull Space space, Player player) {
         int playerNumber = board.getPlayerNumber(player);
@@ -179,7 +189,6 @@ public class GameController {
     // XXX: V2
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
-        Space current = currentPlayer.getSpace();
         if (board.getPhase() == ACTIVATION && currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {

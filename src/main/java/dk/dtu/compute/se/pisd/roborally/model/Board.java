@@ -59,7 +59,7 @@ public class Board extends Subject {
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
     public Board(int width, int height, String boardName) {
-        this.boardName = boardName;
+       // this.boardName = boardName;
         this.width = width;
         this.height = height;
         spaces = new Space[width][height];
@@ -247,9 +247,10 @@ public class Board extends Subject {
 
 
     public String getStatusMessage() {
-        return "Player = " + getCurrentPlayer().getName() + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
+        return "Player = " + getCurrentPlayer().getName() + ", Checkpoints reached: " + getCurrentPlayer().checkpointsReached + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
                 ", Step: " + getStep();
     }
+
 
     // counts the number of moves
     private int count;
