@@ -111,8 +111,6 @@ public class AppController implements Observer {
                 space.setStart(0);
             }
 
-
-
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
