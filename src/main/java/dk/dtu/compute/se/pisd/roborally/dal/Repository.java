@@ -154,6 +154,7 @@ class Repository implements IRepository {
 		assert game.getGameId() != null;
 
 		Connection connection = connector.getConnection();
+
 		try {
 			connection.setAutoCommit(false);
 
@@ -215,7 +216,7 @@ class Repository implements IRepository {
 				// game = new Board(width,height);
 				// TODO and we should also store the used game board in the database
 				//      for now, we use the default game board
-				game = LoadBoard.loadBoard("defaultboard1");
+				game = LoadBoard.loadBoard("defaultboard2");
 				if (game == null) {
 					return null;
 				}
