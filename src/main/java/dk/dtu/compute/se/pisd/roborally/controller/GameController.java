@@ -80,10 +80,17 @@ public class GameController {
     }
 
     public void holeCheck() {
+
         for (int i = 0; i < holePlayer.size(); i++) {
             Player currentPlayer = holePlayer.get(i);
-            String playername = currentPlayer.getName();
-            i--;
+            if (currentPlayer.checkpointsReached <= 0){
+                currentPlayer.setSpace(board.getSpace(currentPlayer.getPlayerID(),0));
+                holePlayer.clear();
+            }
+            else {
+                currentPlayer.setSpace(currentPlayer.getLastCheckpoint());
+                holePlayer.clear();
+            }
         }
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -122,6 +129,7 @@ public class GameController {
             if (space.getCheckpoint() - 1 == playerCheckpoint) {
                 player.setCheckpointsReached(playerCheckpoint + 1);
                 System.out.println(space.getPlayer().getName() + ", du har nu ramt checkpoint " + space.getCheckpoint());
+                player.setLastCheckpoint(space);
             } else if (space.getCheckpoint() <= playerCheckpoint) {
                 System.out.println(space.getPlayer().getName() + ", du har allerede været forbi dette checkpoint");
             } else {
@@ -251,6 +259,10 @@ public class GameController {
                         }
                         for (int i = 0; i < board.getPlayersNumber(); i++) {
                             winCheck(board.getPlayer(i));
+                        }
+                        for (int i = 0; i < board.getPlayersNumber(); i++) {
+                            holeCheck();
+
                         }
 
                         moveOnConveyor();
