@@ -92,9 +92,11 @@ public class AppController implements Observer {
                 int boardNo = resultBoard.get();
                 if (boardNo == 1) {
                     board = LoadBoard.loadBoard("defaultboard1");
+                    board.setBoardID(1);
                 }
                 else {
                     board = LoadBoard.loadBoard("defaultboard");
+                    board.setBoardID(2);
                 }
             }
             gameController = new GameController(board);
@@ -123,7 +125,7 @@ public class AppController implements Observer {
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
-        Board loadedBoard = RepositoryAccess.getRepository().loadGameFromDB(14);
+        Board loadedBoard = RepositoryAccess.getRepository().loadGameFromDB(2);
         gameController = new GameController(loadedBoard);
         gameController.startProgrammingPhase();
         roboRally.createBoardView(gameController);

@@ -58,6 +58,8 @@ public class Board extends Subject {
 
     public String boardName;
 
+    int boardID;
+
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
     public Board(int width, int height, String boardName) {
@@ -281,5 +283,13 @@ public class Board extends Subject {
                 currentSpace = getNeighbour(currentSpace, conveyorBelt.getHeading().next().next());
             }
         }
+    }
+
+    public int getBoardID() {
+        return boardID;
+    }
+
+    public void setBoardID(int boardID) {
+        this.boardID = boardID;
     }
 }

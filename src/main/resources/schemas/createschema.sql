@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS Game (
   phase tinyint,
   step tinyint,
   currentPlayer tinyint NULL,
+  boardID tinyint,
   
   PRIMARY KEY (gameID),
   FOREIGN KEY (gameID, currentPlayer) REFERENCES Player(gameID, playerID)
