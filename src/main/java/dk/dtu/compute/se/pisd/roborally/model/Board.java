@@ -60,6 +60,8 @@ public class Board extends Subject {
 
     int boardID;
 
+    public int numberOfChecks;
+
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
     public Board(int width, int height, String boardName) {
@@ -291,5 +293,8 @@ public class Board extends Subject {
 
     public void setBoardID(int boardID) {
         this.boardID = boardID;
+        if (boardID == 1) {
+            numberOfChecks = 4;
+        }
     }
 }

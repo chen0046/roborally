@@ -78,7 +78,7 @@ public class GameController {
     }
 
     public void winCheck(Player player) {
-        if (player.checkpointsReached == 4) {
+        if (player.checkpointsReached == board.numberOfChecks) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("TILLYKKE!!!");
             alert.setContentText(player.getName() + " tillykke, du har vundet!\nTryk YES for at starte nyt spil\nTryk CLOSE for at afslutte programmet");
