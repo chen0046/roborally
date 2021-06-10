@@ -75,54 +75,56 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        //spilleplade 1 8*8
-        spaces[0][2].setRotateLeft(1);
-        spaces[7][5].setRotateRight(1);
+        //spilleplade 2 8*8
+        if (boardID == 2) {
+            spaces[0][2].setRotateLeft(1);
+            spaces[7][5].setRotateRight(1);
 
-        spaces[2][3].setHole(1);
-        spaces[4][5].setHole(1);
-        spaces[3][7].setHole(1);
+            spaces[2][3].setHole(1);
+            spaces[4][5].setHole(1);
+            spaces[3][7].setHole(1);
 
-        spaces[6][2].setCheckpoint(1);
-        spaces[0][7].setCheckpoint(2);
-        spaces[6][6].setCheckpoint(3);
-        spaces[7][0].setCheckpoint(4);
+            spaces[6][2].setCheckpoint(1);
+            spaces[0][7].setCheckpoint(2);
+            spaces[6][6].setCheckpoint(3);
+            spaces[7][0].setCheckpoint(4);
 
-        spaces[6][1].walls.add(Heading.WEST);
-        spaces[3][2].walls.add(Heading.SOUTH);
-        spaces[7][3].walls.add(Heading.SOUTH);
-        spaces[0][6].walls.add(Heading.SOUTH);
-        spaces[6][7].walls.add(Heading.NORTH);
-        spaces[6][0].walls.add(Heading.WEST);
+            spaces[6][1].walls.add(Heading.WEST);
+            spaces[3][2].walls.add(Heading.SOUTH);
+            spaces[7][3].walls.add(Heading.SOUTH);
+            spaces[0][6].walls.add(Heading.SOUTH);
+            spaces[6][7].walls.add(Heading.NORTH);
+            spaces[6][0].walls.add(Heading.WEST);
 
-        conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 4, 2));
-        conveyorBelts.add(new ConveyorBelt(2, Heading.EAST, 2, 6));
-        conveyorBelts.add(new ConveyorBelt(3, Heading.WEST, 4, 7));
-        this.stepMode = false;
-        setConveyor();
+            conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 4, 2));
+            conveyorBelts.add(new ConveyorBelt(2, Heading.EAST, 2, 6));
+            conveyorBelts.add(new ConveyorBelt(3, Heading.WEST, 4, 7));
+            this.stepMode = false;
+            setConveyor();
+        }
 
-        //spilleplade 2 10*10
-        //spaces[1][2].setHole(1);
-        //spaces[9][3].setHole(1);
-        //spaces[1][8].setHole(1);
+        if (boardID == 1) {
+            spaces[1][2].setHole(1);
+            spaces[9][3].setHole(1);
+            spaces[1][8].setHole(1);
 
-        //spaces[5][2].setRotateLeft(1);
-        //spaces[2][9].setRotateRight(1);
+            spaces[5][2].setRotateLeft(1);
+            spaces[2][9].setRotateRight(1);
 
-        //spaces[7][7].setCheckpoint(1);
-        //spaces[9][2].setCheckpoint(2);
-        //spaces[1][3].setCheckpoint(3);
-        //spaces[1][9].setCheckpoint(4);
-        //spaces[5][4].setCheckpoint(5);
+            spaces[7][7].setCheckpoint(1);
+            spaces[9][2].setCheckpoint(2);
+            spaces[1][3].setCheckpoint(3);
+            spaces[1][9].setCheckpoint(4);
+            spaces[5][4].setCheckpoint(5);
 
-        //spaces[3][3].walls.add(Heading.WEST);
+            spaces[3][3].walls.add(Heading.WEST);
 
-        //conveyorBelts.add(new ConveyorBelt(3,Heading.NORTH,1,1));
-        //conveyorBelts.add(new ConveyorBelt(2,Heading.EAST,8,0));
-        //conveyorBelts.add(new ConveyorBelt(4,Heading.SOUTH,4,7));
-        //conveyorBelts.add(new ConveyorBelt(3,Heading.EAST,7,9));
-        //setConveyor();
-
+            conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 1, 1));
+            conveyorBelts.add(new ConveyorBelt(2, Heading.EAST, 8, 0));
+            conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 4, 7));
+            conveyorBelts.add(new ConveyorBelt(3, Heading.EAST, 7, 9));
+            setConveyor();
+        }
     }
 
     public Board(int width, int height, int width1, int height1, String boardName, Space[][] spaces) {

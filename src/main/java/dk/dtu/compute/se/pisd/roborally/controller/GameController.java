@@ -501,7 +501,7 @@ public class GameController {
     public void rotateGearRight(Player player, Space space) {
         Space current = player.getSpace();
         if (current != null) {
-            if (space.getRotateLeft() == 1) {
+            if (space.getRotateRight() == 1) {
                 turnRight(current.getPlayer());
             }
         }
