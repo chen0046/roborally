@@ -59,8 +59,7 @@ class Connector {
 		}
     }
     
-    private void createDatabaseSchema() {
-
+    public void createDatabaseSchema() {
     	String createTablesStatement =
 				IOUtil.readResource("schemas/createschema.sql");
 
