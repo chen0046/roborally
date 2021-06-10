@@ -3,9 +3,7 @@
   "height": 8,
   "spaces": [
     {
-      "walls": [
-        "SOUTH"
-      ],
+
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",

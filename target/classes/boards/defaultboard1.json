@@ -3,7 +3,7 @@
   "height": 10,
   "spaces": [
     {
-      
+
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",

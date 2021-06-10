@@ -108,7 +108,8 @@ public class AppController implements Observer {
                 Space space = board.getSpace(i % board.width, 0);
                 space.setStart(0);
             }
-            
+
+
 
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
