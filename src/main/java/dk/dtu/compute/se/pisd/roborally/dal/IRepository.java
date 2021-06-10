@@ -41,4 +41,6 @@ public interface IRepository {
 	
 	List<GameInDB> getGames();
 
+	void createDataBase();
+
 }

@@ -21,7 +21,9 @@
  */
 package dk.dtu.compute.se.pisd.roborally.view;
 
+import com.sun.jdi.connect.Connector;
 import dk.dtu.compute.se.pisd.roborally.controller.AppController;
+import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -48,6 +50,8 @@ public class RoboRallyMenuBar extends MenuBar {
 
     private MenuItem exitApp;
 
+    private MenuItem createDataBase;
+
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
 
@@ -70,6 +74,10 @@ public class RoboRallyMenuBar extends MenuBar {
         loadGame.setOnAction( e -> this.appController.loadGame());
         controlMenu.getItems().add(loadGame);
 
+        createDataBase = new MenuItem(("Create database"));
+        createDataBase.setOnAction(e -> this.appController.createDatabase());
+        controlMenu.getItems().add(createDataBase);
+
         exitApp = new MenuItem("Exit");
         exitApp.setOnAction( e -> this.appController.exit());
         controlMenu.getItems().add(exitApp);
@@ -85,11 +93,13 @@ public class RoboRallyMenuBar extends MenuBar {
             stopGame.setVisible(true);
             saveGame.setVisible(true);
             loadGame.setVisible(false);
+            createDataBase.setVisible(true);
         } else {
             newGame.setVisible(true);
             stopGame.setVisible(false);
             saveGame.setVisible(false);
             loadGame.setVisible(true);
+            createDataBase.setVisible(false);
         }
     }
 

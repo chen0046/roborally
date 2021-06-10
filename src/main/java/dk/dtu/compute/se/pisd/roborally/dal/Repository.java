@@ -549,4 +549,7 @@ class Repository implements IRepository {
 			}
 		}
 	}
+	public void createDataBase() {
+		connector.createDatabaseSchema();
+	}
 }
