@@ -116,9 +116,12 @@ public class GameController {
         }
     }
 
-    public void nextPlayerTurn(@NotNull Space space, Player player) {
+    public void nextPlayerTurn(Player player) {
         int playerNumber = board.getPlayerNumber(player);
         Player nextPlayer = board.getPlayer((playerNumber + 1) % board.getPlayersNumber());
+        if (nextPlayer.getSpace() == null) {
+            nextPlayerTurn(nextPlayer);
+        }
         board.setCurrentPlayer(nextPlayer);
         board.setCount(board.getCount() + 1);
     }
