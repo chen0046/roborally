@@ -109,10 +109,10 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().clear();
             updateHole();
             updateWall();
-            updateCheckpoint();
             updateConveyor();
             updateRotateRight();
             updateRotateLeft();
+            updateCheckpoint();
             updatePlayer();
         }
     }

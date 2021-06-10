@@ -89,12 +89,11 @@ public class AppController implements Observer {
                 }
                 int boardNo = resultBoard.get();
                 if (boardNo == 1) {
-                    board = LoadBoard.loadBoard("defaultboard1");
-                    board.setBoardID(1);
+                    board = LoadBoard.loadBoard("defaultboard1",1);
                 }
                 else {
-                    board = LoadBoard.loadBoard("defaultboard2");
-                    board.setBoardID(2);
+                    board = LoadBoard.loadBoard("defaultboard2",2);
+
                 }
             }
             gameController = new GameController(board);

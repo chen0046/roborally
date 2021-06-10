@@ -219,9 +219,9 @@ class Repository implements IRepository {
 				//      for now, we use the default game board
 				int boardID = rs.getInt("boardID");
 				if (boardID == 1) {
-					game = LoadBoard.loadBoard("defaultboard1");
+					game = LoadBoard.loadBoard("defaultboard1",1);
 				} else {
-					game = LoadBoard.loadBoard("defaultboard");
+					game = LoadBoard.loadBoard("defaultboard",2);
 				}
 				if (game == null) {
 					return null;

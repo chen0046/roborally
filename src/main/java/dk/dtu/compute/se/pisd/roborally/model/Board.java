@@ -64,10 +64,11 @@ public class Board extends Subject {
 
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
-    public Board(int width, int height, String boardName) {
+    public Board(int width, int height, String boardName, int id) {
        // this.boardName = boardName;
         this.width = width;
         this.height = height;
+        this.boardID = id;
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -134,8 +135,8 @@ public class Board extends Subject {
         this.spaces = spaces;
     }
 
-    public Board(int width, int height) {
-        this(width, height, "defaultboard");
+    public Board(int width, int height, int id) {
+        this(width, height, "defaultboard",id);
     }
 
     public Integer getGameId() {
