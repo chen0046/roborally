@@ -96,7 +96,7 @@ public class AppController implements Observer {
                     board.setBoardID(1);
                 }
                 else {
-                    board = LoadBoard.loadBoard("defaultboard");
+                    board = LoadBoard.loadBoard("defaultboard2");
                     board.setBoardID(2);
                 }
             }
