@@ -38,15 +38,26 @@ import java.util.List;
  * Spaces now have list of walls, so each space can have several walls.
  */
 public class Space extends Subject {
+
     public final Board board;
+
     public final int x;
     public final int y;
+
     private Player player;
     public List<Heading> walls = new ArrayList<>();
     private int checkpoint;
     private int start;
     public Heading isConveyor;
     private int hole;
+    private int rotateRight;
+    private int rotateLeft;
+
+
+
+
+
+
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -55,6 +66,8 @@ public class Space extends Subject {
         player = null;
         checkpoint = -1;
         hole = -1;
+        rotateRight = -1;
+        rotateLeft = -1;
         start = -1;
     }
 
@@ -117,5 +130,24 @@ public class Space extends Subject {
 
     public void setHole(int hole) {
         this.hole = hole;
+
     }
+    public int getRotateRight() {
+        return rotateRight;
+    }
+
+    public void setRotateRight(int rotateRight) {
+        this.rotateRight = rotateRight;
+    }
+
+
+
+    public int getRotateLeft() {
+        return rotateLeft;
+    }
+
+    public void setRotateLeft(int rotateLeft) {
+        this.rotateLeft = rotateLeft;
+    }
+
 }

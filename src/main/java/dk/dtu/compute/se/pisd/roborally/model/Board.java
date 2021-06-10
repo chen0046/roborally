@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
@@ -38,20 +37,29 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  *
  */ //hjædp
 public class Board extends Subject {
+
     public final int width;
+
     public final int height;
-    public String boardName = null;
+
     private Integer gameId;
+
     private final Space[][] spaces;
+
     private final List<Player> players = new ArrayList<>();
+
     private Player current;
+
     private Phase phase = INITIALISATION;
+
     private int step = 0;
+
     private boolean stepMode;
 
     List<ConveyorBelt> conveyorBelts = new ArrayList<>();
 
-    public Board(int width, int height) {
+    public Board(int width, int height, String boardName) {
+        this.boardName = boardName;
         this.width = width;
         this.height = height;
         spaces = new Space[width][height];
@@ -61,12 +69,10 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        /*spaces[0][0].setStart(0);
-        spaces[1][0].setStart(0);
-        spaces[2][0].setStart(0);
-        spaces[3][0].setStart(0);*/
-
         //spilleplade 1
+        spaces[3][3].setRotateLeft(1);
+        spaces[1][1].setRotateRight(1);
+
         spaces[2][3].setHole(1);
         spaces[7][5].setHole(1);
         spaces[5][6].setHole(1);
@@ -102,8 +108,11 @@ public class Board extends Subject {
 
         this.width = width1;
         this.height = height1;
-        this.boardName = boardName;
         this.spaces = spaces;
+    }
+
+    public Board(int width, int height) {
+        this(width, height, "defaultboard");
     }
 
     public Integer getGameId() {
@@ -238,7 +247,7 @@ public class Board extends Subject {
 
 
     public String getStatusMessage() {
-        return "Player = " + getCurrentPlayer().getName() + ", Checkpoints Reached: " + getCurrentPlayer().checkpointsReached + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
+        return "Player = " + getCurrentPlayer().getName() + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
                 ", Step: " + getStep();
     }
 
