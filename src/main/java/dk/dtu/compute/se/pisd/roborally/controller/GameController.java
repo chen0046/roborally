@@ -21,9 +21,16 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.exceptions.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
 
@@ -41,6 +48,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.ACTIVATION;
 public class GameController {
 
     final public Board board;
+    public ArrayList<Player> holePlayer = new ArrayList();
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -69,6 +77,36 @@ public class GameController {
         player.setSpace(space);
         nextPlayerTurn(space, player);
 
+    }
+
+    public void holeCheck() {
+        for (int i = 0; i < holePlayer.size(); i++) {
+            Player currentPlayer = holePlayer.get(i);
+            String playername = currentPlayer.getName();
+            i--;
+        }
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            Player player = board.getPlayer(i);
+            Space currentSpace = player.getSpace();
+            if (currentSpace.getHole() == 1) {
+                holePlayer.add(player);
+            }
+        }
+    }
+
+    public void winCheck(Player player) {
+        if (player.checkpointsReached == board.numberOfChecks) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("TILLYKKE!!!");
+            alert.setContentText(player.getName() + " tillykke, du har vundet!\nTryk OK for at afslutte programmet\nTryk Cancel og dernæst på stop game og new game i højre\n hjørne for at starte nyt spil");
+            Optional<ButtonType> resultChoice = alert.showAndWait();
+            if (!resultChoice.isPresent() || resultChoice.get() == ButtonType.CANCEL) {
+                return;
+            }
+            else if (resultChoice.get() == ButtonType.OK) {
+                Platform.exit();
+            }
+        }
     }
 
     public void nextPlayerTurn(@NotNull Space space, Player player) {
@@ -179,7 +217,6 @@ public class GameController {
     // XXX: V2
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
-        Space current = currentPlayer.getSpace();
         if (board.getPhase() == ACTIVATION && currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
@@ -211,6 +248,9 @@ public class GameController {
                                 Space space = board.getPlayer(i).getSpace();
                                 rotateGearLeft(board.getPlayer(i), space);
                                 rotateGearRight(board.getPlayer(i), space);
+                        }
+                        for (int i = 0; i < board.getPlayersNumber(); i++) {
+                            winCheck(board.getPlayer(i));
                         }
 
                         moveOnConveyor();
