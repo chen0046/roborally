@@ -50,36 +50,6 @@
     },
     {
       "walls": [
-        "SAUTH"
-      ],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
-          "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ],
-      "x": 0,
-      "y": 5
-    },
-    {
-      "walls": [
-        "SAUTH"
-      ],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
-          "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ],
-      "x": 1,
-      "y": 5
-    },
-    {
-      "walls": [
         "NORTH"
       ],
       "actions": [
