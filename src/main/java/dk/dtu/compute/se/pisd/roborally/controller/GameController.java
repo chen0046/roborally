@@ -81,7 +81,7 @@ public class GameController {
 
     public void holeCheck() {
         if (holePlayer.size() > 0) {
-            while (holePlayer.size() < 0) {
+            while (holePlayer.size() > 0) {
                 Player currentPlayer = holePlayer.get(0);
                 if (currentPlayer.checkpointsReached == 0) {
                     Space start = board.getSpace(currentPlayer.getPlayerID(), 0);
@@ -89,6 +89,7 @@ public class GameController {
                 } else {
                     currentPlayer.setSpace(currentPlayer.getLastCheckpoint());
                 }
+                holePlayer.remove(0);
             }
         }
         for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -322,23 +323,25 @@ public class GameController {
      * Here we have all the different programming card functionalities, for the cards we have made so far.
      */
     public void moveForward(@NotNull Player player) {
-        if (player.board == board) {
-            Heading heading = player.getHeading();
-            Space space = player.getSpace();
-            Space target = board.getNeighbour(space, heading);
-            if (target != null) {
-                try {
-                    movePlayerToSpace(target, player, heading);
-                } catch (ImpossibleMoveException e) {
-                    System.out.println("Impossible move");
-                    // We do nothing here for now
+        if (player.getSpace() != null) {
+            if (player.board == board) {
+                Heading heading = player.getHeading();
+                Space space = player.getSpace();
+                Space target = board.getNeighbour(space, heading);
+                if (target != null) {
+                    try {
+                        movePlayerToSpace(target, player, heading);
+                    } catch (ImpossibleMoveException e) {
+                        System.out.println("Impossible move");
+                        // We do nothing here for now
+                    }
                 }
             }
         }
     }
 
     public void fastForward(@NotNull Player player) {
-        if (player.board == board) {
+        if (player.board == board && player.getSpace() != null) {
             Heading heading = player.getHeading();
             for (int i = 0; i < 2; i++) {
                 Space current = player.getSpace();
@@ -353,7 +356,7 @@ public class GameController {
         }
     }
     public void fasterForward(@NotNull Player player) {
-        if (player.board == board) {
+        if (player.board == board && player.getSpace() != null) {
             Heading heading = player.getHeading();
                 for (int i = 0; i < 3; i++) {
                     Space current = player.getSpace();
@@ -368,14 +371,16 @@ public class GameController {
         }
     }
     public void moveBack(@NotNull Player player) {
-        Heading heading = player.getHeading().next().next();
-        Space space = player.getSpace();
-        Space target = board.getNeighbour(space, heading);
-        if (target != null) {
-            try {
-                movePlayerToSpace(target, player, heading);
-            } catch (ImpossibleMoveException e) {
-                // We do nothing here for now
+        if (player.getSpace() != null) {
+            Heading heading = player.getHeading().next().next();
+            Space space = player.getSpace();
+            Space target = board.getNeighbour(space, heading);
+            if (target != null) {
+                try {
+                    movePlayerToSpace(target, player, heading);
+                } catch (ImpossibleMoveException e) {
+                    // We do nothing here for now
+                }
             }
         }
     }
