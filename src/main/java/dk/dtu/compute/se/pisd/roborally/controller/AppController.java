@@ -26,6 +26,7 @@ import com.sun.jdi.connect.Transport;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
+import dk.dtu.compute.se.pisd.roborally.dal.GameInDB;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
@@ -125,11 +126,22 @@ public class AppController implements Observer {
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
-        Board loadedBoard = RepositoryAccess.getRepository().loadGameFromDB(2);
-        gameController = new GameController(loadedBoard);
-        gameController.startProgrammingPhase();
-        roboRally.createBoardView(gameController);
-
+        List<Integer> ids = new ArrayList<>();
+        List<GameInDB> games = RepositoryAccess.getRepository().getGames();
+        for (int i = 0; i < games.size(); i++) {
+            ids.add(games.get(i).id);
+        }
+        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(ids.get(1), ids);
+        dialog.setTitle("Games you can choose from");
+        dialog.setHeaderText("Select a game");
+        Optional<Integer> result = dialog.showAndWait();
+        Board board = null;
+        if (result.isPresent()) {
+            Board loadedBoard = RepositoryAccess.getRepository().loadGameFromDB(result.get());
+            gameController = new GameController(loadedBoard);
+            gameController.startProgrammingPhase();
+            roboRally.createBoardView(gameController);
+        }
     }
 
     /**
