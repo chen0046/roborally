@@ -85,7 +85,7 @@ public class GameController {
                 Player currentPlayer = holePlayer.get(0);
                 if (currentPlayer.checkpointsReached == 0) {
                     Space start = board.getSpace(currentPlayer.getPlayerID(), 0);
-                    start.setPlayer(currentPlayer);
+                    currentPlayer.setSpace(start);
                 } else {
                     currentPlayer.setSpace(currentPlayer.getLastCheckpoint());
                 }
