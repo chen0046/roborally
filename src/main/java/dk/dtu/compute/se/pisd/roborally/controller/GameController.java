@@ -80,7 +80,13 @@ public class GameController {
     }
 
     public void holeCheck() {
-
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            Player player = board.getPlayer(i);
+            Space currentSpace = player.getSpace();
+            if (currentSpace.getHole() == 1) {
+                holePlayer.add(player);
+            }
+        }
         for (int i = 0; i < holePlayer.size(); i++) {
             Player currentPlayer = holePlayer.get(i);
             if (currentPlayer.checkpointsReached <= 0){
@@ -92,13 +98,7 @@ public class GameController {
                 holePlayer.clear();
             }
         }
-        for (int i = 0; i < board.getPlayersNumber(); i++) {
-            Player player = board.getPlayer(i);
-            Space currentSpace = player.getSpace();
-            if (currentSpace.getHole() == 1) {
-                holePlayer.add(player);
-            }
-        }
+
     }
 
     public void winCheck(Player player) {
