@@ -35,7 +35,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
- */ //hjædp
+ */
 public class Board extends Subject {
 
     public final int width;
