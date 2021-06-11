@@ -34,7 +34,12 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @coauthor Oliver Lyngholm Fiedler
+ * @coauthor Andreas Vilholm Vilstrup
+ * @coauthor Isabel Grimmig Jacobsen
+ * @coauthor Alexander Solomon
+ * @coauthor Chenxi Cai
+ * @coauthor Ahmmad Shereef
  */
 public class Board extends Subject {
 
@@ -77,6 +82,10 @@ public class Board extends Subject {
             }
         }
         //spilleplade 2 8*8
+        /**
+         * Here we have everything that we didn't figure out how to implement in the json file
+         * and implement it depending on which boardID we use.
+         */
         if (boardID == 2) {
             spaces[0][2].setRotateLeft(1);
             spaces[7][5].setRotateRight(1);
@@ -261,6 +270,10 @@ public class Board extends Subject {
 
     // XXX: V2 changed the status so that it shows the phase, the player and the step
 
+    /**
+     * Here we keep the user updated on different things within the GUI
+     *
+     */
 
     public String getStatusMessage() {
         return "Player = " + getCurrentPlayer().getName() + ", Checkpoints reached: " + getCurrentPlayer().checkpointsReached + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +

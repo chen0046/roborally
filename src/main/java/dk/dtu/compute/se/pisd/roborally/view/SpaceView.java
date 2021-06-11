@@ -100,7 +100,8 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Here we added the new methods we created for the wall and the checkpoint
+     * Here we added the new methods we created for the GUI in the right order of
+     * which visual should be prioritized
      *
      */
     @Override
@@ -188,7 +189,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Here we create the visual for the checkpoint (currently temporary design)
+     * Here we create the visual for the checkpoint and the startfields
      */
     public void checkpoint() {
         int priority = space.getCheckpoint();
@@ -199,7 +200,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().add(canvas);
     }
     public void startField() {
-        Player player = space.getPlayer();
         Circle start = new Circle(35,Color.GREENYELLOW);
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -218,6 +218,10 @@ public class SpaceView extends StackPane implements ViewObserver {
             checkpoint();
         }
     }
+
+    /**
+     * Here is the design for the conveyorbelts
+     */
     public void conveyorSouth() {
         Polygon moveSouth = new Polygon(10,35,25,60,40,35);
         moveSouth.setStroke(Color.VIOLET);
@@ -255,6 +259,10 @@ public class SpaceView extends StackPane implements ViewObserver {
             conveyorSouth();
         }
     }
+
+    /**
+     * the design for the hole and the rotate fields
+     */
     public void hole() {
         Circle redHole = new Circle(30,Color.DARKRED);
         this.getChildren().add(redHole);

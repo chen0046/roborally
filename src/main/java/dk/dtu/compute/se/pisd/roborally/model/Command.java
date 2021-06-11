@@ -29,12 +29,20 @@ import java.util.List;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @coauthor Oliver Lyngholm Fiedler
+ * @coauthor Andreas Vilholm Vilstrup
+ * @coauthor Isabel Grimmig Jacobsen
+ * @coauthor Alexander Solomon
+ * @coauthor Chenxi Cai
+ * @coauthor Ahmmad Shereef
  */
 public enum Command {
 
     // This is a very simplistic way of realizing different commands.
 
+    /**
+     * Here we have added the different types of enums relating to the different programming cards
+     */
     FORWARD("Fwd"),
     RIGHT("Turn Right"),
     LEFT("Turn Left"),
