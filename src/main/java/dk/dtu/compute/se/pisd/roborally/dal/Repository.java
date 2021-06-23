@@ -299,6 +299,7 @@ class Repository implements IRepository {
 			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt("progress", player.checkpointsReached);
 			rs.insertRow();
 		}
 
@@ -326,6 +327,9 @@ class Repository implements IRepository {
 				player.setSpace(game.getSpace(x, y));
 				int heading = rs.getInt(PLAYER_HEADING);
 				player.setHeading(Heading.values()[heading]);
+				Space space = game.getSpace(playerId, 0);
+				space.setStart(0);
+				player.checkpointsReached = rs.getInt("progress");
 
 				// TODO  should also load players program and hand here
 			} else {
@@ -333,6 +337,7 @@ class Repository implements IRepository {
 				System.err.println("Game in DB does not have a player with id " + i + "!");
 			}
 		}
+
 		rs.close();
 	}
 

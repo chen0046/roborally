@@ -136,7 +136,7 @@ public class AppController implements Observer {
         for (int i = 0; i < games.size(); i++) {
             ids.add(games.get(i).id);
         }
-        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(ids.get(1), ids);
+        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(ids.get(0), ids);
         dialog.setTitle("Games you can choose from");
         dialog.setHeaderText("Select a game");
         Optional<Integer> result = dialog.showAndWait();

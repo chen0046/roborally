@@ -104,6 +104,7 @@ public class Board extends Subject {
             conveyorBelts.add(new ConveyorBelt(3, Heading.WEST, 4, 7));
             this.stepMode = false;
             setConveyor();
+            numberOfChecks = 4;
         }
 
         if (boardID == 1) {
@@ -126,6 +127,7 @@ public class Board extends Subject {
             conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 4, 7));
             conveyorBelts.add(new ConveyorBelt(3, Heading.EAST, 7, 9));
             setConveyor();
+            numberOfChecks = 5;
         }
     }
 
