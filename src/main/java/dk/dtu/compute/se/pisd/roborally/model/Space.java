@@ -33,7 +33,12 @@ import java.util.List;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @coauthor Oliver Lyngholm Fiedler
+ * @coauthor Andreas Vilholm Vilstrup
+ * @coauthor Isabel Grimmig Jacobsen
+ * @coauthor Alexander Solomon
+ * @coauthor Chenxi Cai
+ * @coauthor Ahmmad Shereef
  *
  * We decided to give Space an extra class in its attributes to make it easy for us to attach a wall to a space.
  * Spaces now have list of walls, so each space can have several walls.
@@ -101,7 +106,8 @@ public class Space extends Subject {
 
     /**
      * @return
-     * We utilized a getter and setter function to be able to check for a wall and create one as well.
+     * We utilized a getter and setter function to be able to check for a checkpoint and create one as well
+     * and many other things.
      */
 
     public int getCheckpoint() {

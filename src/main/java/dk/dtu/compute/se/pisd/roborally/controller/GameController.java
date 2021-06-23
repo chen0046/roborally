@@ -110,17 +110,23 @@ public class GameController {
         }
     }
 
+    /**
+     * Here we have winCheck where we check the int checkpointsreached that we assigned
+     * to a player and the int numberOfChecks that we assigned to the board.
+     * if they are the same we get a pop-up saying that a player has won and gives the option to quit the game
+     * @param player We have this so we can check each player if they have won
+     */
     public void winCheck(Player player) {
         if (player.checkpointsReached == board.numberOfChecks) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("TILLYKKE!!!");
-            alert.setContentText(player.getName() + " tillykke, du har vundet!\nTryk OK for at afslutte programmet\nTryk Cancel og dernæst på stop game og new game i højre\n hjørne for at starte nyt spil");
+            alert.setContentText(player.getName() + " tillykke, du har vundet!\nTryk OK for at afslutte programmet\nTryk Cancel og dernæst på stop game og new game i venstre\n hjørne for at starte nyt spil");
             Optional<ButtonType> resultChoice = alert.showAndWait();
             if (!resultChoice.isPresent() || resultChoice.get() == ButtonType.CANCEL) {
-                return;
+                return; //Returns to the state before
             }
             else if (resultChoice.get() == ButtonType.OK) {
-                Platform.exit();
+                Platform.exit(); // closes the program
             }
         }
     }
@@ -135,6 +141,12 @@ public class GameController {
         board.setCount(board.getCount() + 1);
     }
 
+    /**
+     * This method ensures that checkpoints are reached in the right order
+     * @param space to check the space that the checkpoint is on and to assign that space as the
+     *              lastcheckpoint if appropriate
+     * @param player which player is on the checkpoint
+     */
     public void checkCheckpoints(@NotNull Space space, Player player) {
         int playerCheckpoint = player.checkpointsReached;
         if (space.getCheckpoint() != -1) {
@@ -235,6 +247,10 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * This method makes sure that the different steps gets executed in the right order
+     */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == ACTIVATION && currentPlayer != null) {
@@ -264,8 +280,6 @@ public class GameController {
                                 Space space = board.getPlayer(i).getSpace();
                                 checkCheckpoints(space, board.getPlayer(i));
                             }
-
-
                         }
                             for (int i =0; i < board.getPlayersNumber(); i++){
                                 Space space = board.getPlayer(i).getSpace();

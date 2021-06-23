@@ -45,7 +45,12 @@ import java.util.*;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @coauthor Oliver Lyngholm Fiedler
+ * @coauthor Andreas Vilholm Vilstrup
+ * @coauthor Isabel Grimmig Jacobsen
+ * @coauthor Alexander Solomon
+ * @coauthor Chenxi Cai
+ * @coauthor Ahmmad Shereef
  */
 public class AppController implements Observer {
 
@@ -91,10 +96,13 @@ public class AppController implements Observer {
                 int boardNo = resultBoard.get();
                 if (boardNo == 1) {
                     board = LoadBoard.loadBoard("defaultboard1",1);
+                    assert board != null;
+                    board.setBoardID(1);
                 }
                 else {
                     board = LoadBoard.loadBoard("defaultboard2",2);
-
+                    assert board != null;
+                    board.setBoardID(2);
                 }
             }
             gameController = new GameController(board);
@@ -107,8 +115,6 @@ public class AppController implements Observer {
                 Space space = board.getSpace(i % board.width, 0);
                 space.setStart(0);
             }
-
-
 
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));

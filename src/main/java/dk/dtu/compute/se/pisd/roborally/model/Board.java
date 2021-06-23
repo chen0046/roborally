@@ -34,7 +34,12 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @coauthor Oliver Lyngholm Fiedler
+ * @coauthor Andreas Vilholm Vilstrup
+ * @coauthor Isabel Grimmig Jacobsen
+ * @coauthor Alexander Solomon
+ * @coauthor Chenxi Cai
+ * @coauthor Ahmmad Shereef
  */
 public class Board extends Subject {
 
@@ -77,6 +82,10 @@ public class Board extends Subject {
             }
         }
         //spilleplade 2 8*8
+        /**
+         * Here we have everything that we didn't figure out how to implement in the json file
+         * and implement it depending on which boardID we use.
+         */
         if (boardID == 2) {
             spaces[0][2].setRotateLeft(1);
             spaces[7][5].setRotateRight(1);
@@ -87,15 +96,8 @@ public class Board extends Subject {
 
             spaces[6][2].setCheckpoint(1);
             spaces[0][7].setCheckpoint(2);
-            spaces[6][6].setCheckpoint(3);
+            spaces[5][5].setCheckpoint(3);
             spaces[7][0].setCheckpoint(4);
-
-            spaces[6][1].walls.add(Heading.WEST);
-            spaces[3][2].walls.add(Heading.SOUTH);
-            spaces[7][3].walls.add(Heading.SOUTH);
-            spaces[0][6].walls.add(Heading.SOUTH);
-            spaces[6][7].walls.add(Heading.NORTH);
-            spaces[6][0].walls.add(Heading.WEST);
 
             conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 4, 2));
             conveyorBelts.add(new ConveyorBelt(2, Heading.EAST, 2, 6));
@@ -111,6 +113,7 @@ public class Board extends Subject {
 
             spaces[5][2].setRotateLeft(1);
             spaces[2][9].setRotateRight(1);
+            spaces[8][8].setRotateRight(1);
 
             spaces[7][7].setCheckpoint(1);
             spaces[9][2].setCheckpoint(2);
@@ -118,9 +121,7 @@ public class Board extends Subject {
             spaces[1][9].setCheckpoint(4);
             spaces[5][4].setCheckpoint(5);
 
-            spaces[3][3].walls.add(Heading.WEST);
-
-            conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 1, 1));
+            conveyorBelts.add(new ConveyorBelt(3, Heading.NORTH, 7, 1));
             conveyorBelts.add(new ConveyorBelt(2, Heading.EAST, 8, 0));
             conveyorBelts.add(new ConveyorBelt(4, Heading.SOUTH, 4, 7));
             conveyorBelts.add(new ConveyorBelt(3, Heading.EAST, 7, 9));
@@ -269,6 +270,10 @@ public class Board extends Subject {
 
     // XXX: V2 changed the status so that it shows the phase, the player and the step
 
+    /**
+     * Here we keep the user updated on different things within the GUI
+     *
+     */
 
     public String getStatusMessage() {
         return "Player = " + getCurrentPlayer().getName() + ", Checkpoints reached: " + getCurrentPlayer().checkpointsReached + ", number of moves: " + getCount() + ", phase: " + getPhase().name() +
@@ -312,10 +317,11 @@ public class Board extends Subject {
     public void setBoardID(int boardID) {
         this.boardID = boardID;
         if (boardID == 1) {
-            numberOfChecks = 4;
-
+            numberOfChecks = 5;
         }
-
+        else if (boardID == 2) {
+            numberOfChecks = 4;
+        }
     }
 
 }

@@ -2,20 +2,7 @@
   "width": 10,
   "height": 10,
   "spaces": [
-    {
 
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
-          "INSTANCE": {
-            "spaces" :"getHole",
-            "heading": "WEST"
-          }
-        }
-      ],
-      "x": 1,
-      "y": 1
-    },
     {
       "walls": [
         "NORTH"
@@ -32,13 +19,6 @@
       "y": 3
     },
     {
-      "spaces":[
-        "setHole(1)"
-      ],
-      "x": 1,
-      "y": 2
-    },
-    {
       "walls": [
         "WEST"
       ],
@@ -70,7 +50,22 @@
     },
     {
       "walls": [
-        "SAUTH"
+        "NORTH"
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ],
+      "x": 7,
+      "y": 7
+    },
+    {
+      "walls": [
+        "SOUTH"
       ],
       "actions": [
         {
@@ -85,7 +80,7 @@
     },
     {
       "walls": [
-        "SAUTH"
+        "SOUTH"
       ],
       "actions": [
         {
@@ -97,21 +92,6 @@
       ],
       "x": 1,
       "y": 5
-    },
-    {
-      "walls": [
-        "NORTH"
-      ],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt",
-          "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ],
-      "x": 7,
-      "y": 7
     }
   ]
 }
